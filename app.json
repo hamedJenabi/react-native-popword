@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "wordpop",
+    "slug": "wordpop",
+    "platforms": ["ios", "android", "web"],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./app/assets/icon.png",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#009688"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    }
+  }
+}
