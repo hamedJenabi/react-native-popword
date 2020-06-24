@@ -1,14 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 
-import {
-  Image,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-  StyleSheet,
-} from 'react-native';
+import { View, Image, StyleSheet, Text, Button } from 'react-native';
 import 'react-native-gesture-handler';
 import {
   NavigationContainer,
@@ -16,14 +9,14 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import Buttons from '../../components/Buttons';
 
-export default function SplashScreen() {
+import Buttons from '../../../components/Buttons';
+
+function SplashScreen({ navigation }) {
   const navigation = useNavigation();
 
   const onPressAction = () => {
-    navigation.navigate('Login');
+    navigation.navigate('Home');
   };
   return (
     <View style={styles.container}>
@@ -71,3 +64,5 @@ const styles = StyleSheet.create({
     bottom: 50,
   },
 });
+
+export default SplashScreen;

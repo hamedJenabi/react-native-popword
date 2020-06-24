@@ -24,5 +24,11 @@ const styles = {
     borderRadius: 5,
     paddingVertical: 10,
     paddingHorizontal: 12,
+    marginLeft: 30,
+    marginRight: 30,
+    marginTop: 20,
+    height: 48,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 };

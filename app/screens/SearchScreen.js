@@ -4,6 +4,7 @@ import {
   Text,
   View,
   Picker,
+  Alert,
   FlatList,
   ActivityIndicator,
   TextInput,
@@ -31,13 +32,17 @@ export default function HomeScreen() {
 
   const onPressAction = () => {
     setShow(true);
-    fetch(KEY, {
-      method: 'GET',
-      headers: {
-        'x-rapidapi-host': 'petapro-translate-v1.p.rapidapi.com',
-        'x-rapidapi-key': '0a868878b3msha696a9ae4c53aaep18f96fjsn41fe05117014',
+    fetch(
+      `https://petapro-translate-v1.p.rapidapi.com/?langpair=en-de&query=${word}&wortart=%7Bwordclass%7D`,
+      {
+        method: 'GET',
+        headers: {
+          'x-rapidapi-host': 'petapro-translate-v1.p.rapidapi.com',
+          'x-rapidapi-key':
+            '0a868878b3msha696a9ae4c53aaep18f96fjsn41fe05117014',
+        },
       },
-    })
+    )
       .then((res) => res.json())
       .then((response) => {
         setLoading(false);
@@ -46,7 +51,16 @@ export default function HomeScreen() {
         console.log(data);
       })
 
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        Alert.alert('Error', 'Word not found', [
+          {
+            text: 'ok',
+            onPress: () => {
+              setWord(''), setLoading(false);
+            },
+          },
+        ]);
+      });
   };
   /************** Return *********/
 
@@ -99,9 +113,8 @@ export default function HomeScreen() {
               keyExtractor={({ id }, index) => id}
               renderItem={({ item }) => (
                 <Text>
-                  {item.l2_text}
-                  {item.wortart}
-                  {item.l1_text}, {item.synonyme2}
+                  {item.l2_text}({item.wortart.toLowerCase()}) : {item.l1_text}
+                  {item.synonyme1}
                 </Text>
               )}
             />
