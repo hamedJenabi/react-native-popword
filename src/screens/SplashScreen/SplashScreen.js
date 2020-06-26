@@ -1,7 +1,14 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 
-import { View, Image, StyleSheet, Text, Button } from 'react-native';
+import {
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+} from 'react-native';
 import 'react-native-gesture-handler';
 import {
   NavigationContainer,
@@ -9,22 +16,26 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Buttons from '../../../components/Buttons';
 
-function SplashScreen({ navigation }) {
+export default function SplashScreen() {
   const navigation = useNavigation();
 
   const onPressAction = () => {
-    navigation.navigate('Home');
+    navigation.navigate('Login');
   };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>POP WORD</Text>
       <Text lineBreakMode="middle" style={styles.text}>
         Never forget a word you looked up
       </Text>
-      <Image style={styles.image} source={require('../assets/Splash.gif')} />
+      <Image
+        style={styles.image}
+        source={require('../../../app/assets/Splash.gif')}
+      />
       <View style={styles.button}>
         <Buttons text="Enter" onPress={onPressAction} />
       </View>
@@ -64,5 +75,3 @@ const styles = StyleSheet.create({
     bottom: 50,
   },
 });
-
-export default SplashScreen;

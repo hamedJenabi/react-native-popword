@@ -50,7 +50,6 @@ export default function RegistrationScreen({ navigation }) {
       .catch((error) => {
         alert(error);
       });
-    navigation.navigate('Pop Word');
   };
 
   return (

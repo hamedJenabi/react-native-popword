@@ -4,21 +4,28 @@ import { firebase } from './src/firebase/config';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import 'react-native-gesture-handler';
-import { LoginScreen, HomeScreen, RegistrationScreen } from './src/screens';
-import SplashScreen from './app/screens/SplashScreen';
-import SearchScreen from './app/screens/SearchScreen';
+import {
+  LoginScreen,
+  HomeScreen,
+  RegistrationScreen,
+  SplashScreen,
+  ListScreen,
+} from './src/screens';
 
-// import { decode, encode } from 'base-64';
-// if (!global.btoa) {
-//   global.btoa = encode;
-// }
-// if (!global.atob) {
-//   global.atob = decode;
-// }
+import { decode, encode } from 'base-64';
+if (!global.btoa) {
+  global.btoa = encode;
+}
+if (!global.atob) {
+  global.atob = decode;
+}
 
 const Stack = createStackNavigator();
+import { YellowBox } from 'react-native';
 
 export default function App() {
+  YellowBox.ignoreWarnings(['Setting a timer']);
+
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   /******** CHECK FOR STAYING LOGGED IN */
@@ -43,22 +50,31 @@ export default function App() {
     });
   }, []);
   /***************RETURN********** */
+  if (loading) {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Welcome" component={SplashScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
         {user ? (
           <>
-            <Stack.Screen name="Welcome" component={SplashScreen} />
             <Stack.Screen name="Home">
               {(props) => <HomeScreen {...props} extraData={user} />}
             </Stack.Screen>
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Registration" component={RegistrationScreen} />
           </>
         ) : (
           <>
-            <Stack.Screen name="Welcome" component={SplashScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Registration" component={RegistrationScreen} />
-            <Stack.Screen name="Pop Word" component={SearchScreen} />
           </>
         )}
       </Stack.Navigator>

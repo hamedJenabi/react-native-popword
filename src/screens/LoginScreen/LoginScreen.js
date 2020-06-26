@@ -34,7 +34,6 @@ export default function LoginScreen({ navigation }) {
               alert('User does not exist anymore.');
               return;
             }
-            alert('loggen in');
             const user = firestoreDocument.data();
             navigation.navigate('Home', { user });
           })
@@ -53,10 +52,10 @@ export default function LoginScreen({ navigation }) {
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always"
       >
-        {/* <Image
+        <Image
           style={styles.logo}
           source={require('../../../app/assets/icon.png')}
-        /> */}
+        />
         <TextInput
           style={styles.input}
           placeholder="E-mail"
