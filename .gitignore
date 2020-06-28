@@ -3,5 +3,3 @@ node_modules
 firebase
 yarn.lock
 yarn-error.log
-google-services.json
-google-services_old.json

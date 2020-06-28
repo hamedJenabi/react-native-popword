@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "wordpop",
-    "slug": "wordpop",
-    "platforms": ["ios", "android", "web"],
+    "name": "react-native-popword",
+    "slug": "react-native-popword",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./app/assets/icon.png",
+    "icon": "./assets/icon.png",
     "splash": {
+      "image": "./assets/splash.gif",
       "resizeMode": "contain",
-      "backgroundColor": "#009688"
+      "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -16,6 +16,9 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
     }
   }
 }
