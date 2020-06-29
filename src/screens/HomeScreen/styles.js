@@ -5,18 +5,21 @@ export default StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
+  body: {
+    flex: 1,
+  },
   formContainer: {
     flexDirection: 'row',
     height: 80,
-    marginTop: 40,
+    marginTop: 10,
     marginBottom: 20,
     flex: 1,
     paddingTop: 10,
-    paddingBottom: 10,
+    paddingBottom: 30,
     paddingLeft: 30,
     paddingRight: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
+    // justifyContent: 'center',
+    // alignItems: 'center',
   },
   input: {
     height: 48,
@@ -30,7 +33,7 @@ export default StyleSheet.create({
   button: {
     height: 47,
     borderRadius: 5,
-    backgroundColor: '#788eec',
+    backgroundColor: '#009688',
     width: 80,
     alignItems: 'center',
     justifyContent: 'center',
@@ -44,13 +47,28 @@ export default StyleSheet.create({
     padding: 20,
   },
   entityContainer: {
-    marginTop: 16,
-    borderBottomColor: '#cccccc',
-    borderBottomWidth: 1,
-    paddingBottom: 16,
+    borderRadius: 4,
+    borderWidth: 0.1,
+    borderColor: '#d6d7da',
+    padding: 15,
+    marginBottom: 10,
+    shadowOffset: {
+      width: 1,
+      height: 0,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 1.01,
+
+    elevation: 2,
   },
   entityText: {
     fontSize: 20,
+    color: '#333333',
+  },
+  text: {
+    fontSize: 16,
+    paddingBottom: 5,
+    alignSelf: 'center',
     color: '#333333',
   },
 });

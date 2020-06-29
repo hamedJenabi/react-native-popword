@@ -1,14 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { firebase } from '../firebase/config';
-import {
-  StyleSheet,
-  Text,
-  Platform,
-  StatusBar,
-  View,
-  Switch,
-  TouchableOpacity,
-} from 'react-native';
+import { StyleSheet, Text, View, Switch, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Headers() {
@@ -20,14 +12,13 @@ export default function Headers() {
 
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
-  const onPressList = () => {
-    // firebase.auth().signOut();
+  const onListButtonPress = () => {
     navigation.navigate('List');
   };
-  const onPressLogout = () => {
-    // firebase.auth().signOut();
+  async function onPressLogout() {
+    await firebase.auth().signOut();
     navigation.navigate('Login');
-  };
+  }
 
   const showMenuOnPress = () => {
     setShowNav(!showNav);
@@ -57,72 +48,103 @@ export default function Headers() {
 
   return (
     <>
+      <View style={styles.header}>
+        <Text style={styles.title}>POP WORD</Text>
+      </View>
+      <TouchableOpacity onPress={showMenuOnPress}>
+        <Text style={styles.Hamburger}>{showNav ? 'X' : '☰'}</Text>
+      </TouchableOpacity>
+      <Text
+        style={{
+          marginLeft: 10,
+        }}
+      >
+        {user ? user.fullName : ''}
+      </Text>
+      <View style={styles.switch}>
+        <Switch
+          trackColor={{ false: '#767577', true: '#81b0ff' }}
+          thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={toggleSwitch}
+          value={isEnabled}
+        />
+      </View>
+
       <View style={styles.main_menu}>
-        <TouchableOpacity onPress={showMenuOnPress}>
-          <Text style={styles.Hamburger}>{showNav ? 'X' : '☰'}</Text>
-        </TouchableOpacity>
         {showNav ? (
-          <View>
+          <View style={styles.listContainer}>
             <TouchableOpacity onPress={onPressLogout}>
               <Text style={styles.text}>Home</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={onPressList}>
-              <Text style={styles.text}>Word List</Text>
+            <TouchableOpacity onPress={onListButtonPress}>
+              <Text style={styles.text}>History</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={onPressLogout}>
-              <Text style={styles.text}>{logText}</Text>
+            <TouchableOpacity onPress={onListButtonPress}>
+              <Text style={styles.text}>Setting</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={onListButtonPress}>
+              <Text style={styles.text}>About Popword</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.logOut} onPress={onPressLogout}>
+              <Text style={styles.logOutText}>{logText}</Text>
             </TouchableOpacity>
             {/* <Text style={styles.text}>{user.fullName}</Text> */}
           </View>
         ) : null}
-
-        <View style={styles.header}>
-          <Text style={styles.title}>POP WORD</Text>
-          <Switch
-            trackColor={{ false: '#767577', true: '#81b0ff' }}
-            thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={isEnabled}
-          />
-        </View>
       </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  main_menu: {
-    flex: 1,
-    marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-    zIndex: -1,
-  },
-  popUp: {
-    flex: 1,
-    justifyContent: 'space-between',
-    marginRight: 5,
+  listContainer: {
     backgroundColor: 'white',
-    display: 'flex',
-    zIndex: 10,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    // position: 'absolute',
+    zIndex: 100,
   },
 
+  text: {
+    fontSize: 16,
+    marginBottom: 20,
+    marginTop: 20,
+    alignSelf: 'center',
+  },
+  logOut: {
+    fontSize: 16,
+    marginBottom: 20,
+    alignSelf: 'center',
+    height: 47,
+    borderRadius: 5,
+    backgroundColor: '#009688',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logOutText: {
+    color: 'white',
+    fontSize: 16,
+  },
   header: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#009688',
-    zIndex: -1,
+    maxHeight: 60,
   },
   Hamburger: {
     fontSize: 26,
     marginRight: 20,
     alignSelf: 'flex-end',
   },
-  text: {
-    fontSize: 20,
-    marginBottom: 30,
+  switch: {
+    alignSelf: 'flex-start',
   },
   title: {
-    fontSize: 30,
+    fontSize: 35,
+    alignSelf: 'center',
   },
 });

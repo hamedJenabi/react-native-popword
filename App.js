@@ -9,8 +9,10 @@ import {
   HomeScreen,
   RegistrationScreen,
   ListScreen,
+  SplashScreen,
 } from './src/screens';
 import { decode, encode } from 'base-64';
+
 if (!global.btoa) {
   global.btoa = encode;
 }
@@ -19,9 +21,12 @@ if (!global.atob) {
 }
 
 const Stack = createStackNavigator();
+import { YellowBox } from 'react-native';
 
 export default function App() {
+  YellowBox.ignoreWarnings(['Setting a timer']);
   const [loading, setLoading] = useState(true);
+
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -45,9 +50,17 @@ export default function App() {
     });
   }, []);
 
-  // if (loading) {
-  //   return <></>;
-  // }
+  if (loading) {
+    return (
+      <>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name="Welcome" component={SplashScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </>
+    );
+  }
 
   return (
     <NavigationContainer>
@@ -60,6 +73,8 @@ export default function App() {
             <Stack.Screen name="List">
               {(props) => <ListScreen {...props} extraData={user} />}
             </Stack.Screen>
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Registration" component={RegistrationScreen} />
           </>
         ) : (
           <>
