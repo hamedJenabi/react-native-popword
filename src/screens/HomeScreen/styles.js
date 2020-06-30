@@ -49,9 +49,10 @@ export default StyleSheet.create({
   entityContainer: {
     borderRadius: 4,
     borderWidth: 0.1,
-    borderColor: '#d6d7da',
+    borderColor: 'blue',
     padding: 15,
     marginBottom: 10,
+    shadowColor: 'blue',
     shadowOffset: {
       width: 1,
       height: 0,
@@ -59,14 +60,14 @@ export default StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 1.01,
 
-    elevation: 2,
+    elevation: 1,
   },
   entityText: {
     fontSize: 20,
     color: '#333333',
   },
   text: {
-    fontSize: 16,
+    fontSize: 18,
     paddingBottom: 5,
     alignSelf: 'center',
     color: '#333333',

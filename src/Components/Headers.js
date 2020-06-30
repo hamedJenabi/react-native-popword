@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { firebase } from '../firebase/config';
-import { StyleSheet, Text, View, Switch, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Platform,
+  Text,
+  View,
+  Switch,
+  TouchableOpacity,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Headers() {
@@ -14,10 +21,17 @@ export default function Headers() {
 
   const onListButtonPress = () => {
     navigation.navigate('List');
+    setShowNav(false);
   };
+  const onHomeButtonPress = () => {
+    navigation.navigate('Home');
+    setShowNav(false);
+  };
+
   async function onPressLogout() {
     await firebase.auth().signOut();
     navigation.navigate('Login');
+    setShowNav(false);
   }
 
   const showMenuOnPress = () => {
@@ -48,33 +62,40 @@ export default function Headers() {
 
   return (
     <>
+      <View>
+        <Text
+          style={{
+            marginLeft: 10,
+            paddingTop: 10,
+            paddingBottom: 10,
+            alignItems: 'center',
+          }}
+        >
+          {user ? user.fullName : ''}
+        </Text>
+      </View>
       <View style={styles.header}>
         <Text style={styles.title}>POP WORD</Text>
       </View>
-      <TouchableOpacity onPress={showMenuOnPress}>
-        <Text style={styles.Hamburger}>{showNav ? 'X' : '☰'}</Text>
-      </TouchableOpacity>
-      <Text
-        style={{
-          marginLeft: 10,
-        }}
-      >
-        {user ? user.fullName : ''}
-      </Text>
-      <View style={styles.switch}>
-        <Switch
-          trackColor={{ false: '#767577', true: '#81b0ff' }}
-          thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleSwitch}
-          value={isEnabled}
-        />
+      <View>
+        <View style={styles.switch}>
+          <Switch
+            trackColor={{ false: '#767577', true: '#81b0ff' }}
+            thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+          />
+        </View>
+        <TouchableOpacity onPress={showMenuOnPress}>
+          <Text style={styles.Hamburger}>{showNav ? 'X' : '☰'}</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.main_menu}>
         {showNav ? (
           <View style={styles.listContainer}>
-            <TouchableOpacity onPress={onPressLogout}>
+            <TouchableOpacity onPress={onHomeButtonPress}>
               <Text style={styles.text}>Home</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={onListButtonPress}>
@@ -99,16 +120,16 @@ export default function Headers() {
 
 const styles = StyleSheet.create({
   listContainer: {
-    backgroundColor: 'white',
     width: '100%',
+    zIndex: 100,
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'space-between',
     // position: 'absolute',
-    zIndex: 100,
   },
 
   text: {
-    fontSize: 16,
+    fontSize: 18,
     marginBottom: 20,
     marginTop: 20,
     alignSelf: 'center',

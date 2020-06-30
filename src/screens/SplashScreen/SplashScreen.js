@@ -27,9 +27,12 @@ export default function SplashScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>POP WORD</Text>
+      {/* <Text style={styles.title}>POP WORD</Text> */}
       <Text lineBreakMode="middle" style={styles.text}>
-        Never forget a word you looked up
+        Never forget a word
+      </Text>
+      <Text lineBreakMode="middle" style={styles.text}>
+        you looked up
       </Text>
       <Image
         style={styles.image}
@@ -42,32 +45,30 @@ export default function SplashScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#ffffff',
   },
   image: {
     alignSelf: 'center',
     resizeMode: 'contain',
+    marginTop: 40,
   },
 
   title: {
     alignSelf: 'center',
-    top: 70,
+    marginTop: 40,
+
+    top: 20,
     zIndex: 2,
-    fontSize: 26,
+    fontSize: 36,
     letterSpacing: 3,
     fontFamily: 'Roboto',
   },
   text: {
     alignSelf: 'center',
-    top: 150,
+    top: 80,
     zIndex: 2,
-    fontSize: 16,
+    fontSize: 20,
     letterSpacing: 3,
     fontFamily: 'Roboto',
-  },
-  button: {
-    alignSelf: 'center',
-    width: 200,
-    zIndex: 4,
-    bottom: 50,
   },
 });

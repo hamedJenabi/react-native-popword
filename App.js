@@ -45,7 +45,9 @@ export default function App() {
             setLoading(false);
           });
       } else {
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 4000);
       }
     });
   }, []);
@@ -73,8 +75,8 @@ export default function App() {
             <Stack.Screen name="List">
               {(props) => <ListScreen {...props} extraData={user} />}
             </Stack.Screen>
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Registration" component={RegistrationScreen} />
+            {/* <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Registration" component={RegistrationScreen} /> */}
           </>
         ) : (
           <>

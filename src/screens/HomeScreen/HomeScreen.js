@@ -15,12 +15,11 @@ import Headers from '../../Components/Headers';
 
 export default function HomeScreen(props) {
   const [entityText, setEntityText] = useState('');
-  const [entities, setEntities] = useState([]);
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const [show, setShow] = useState(false);
   const [data, setData] = useState([]);
 
-  const entityRef = firebase.firestore().collection('entities');
+  const entityRef = firebase.firestore().collection('wordlist');
   const userID = props.extraData.id;
   const navigation = useNavigation();
 
@@ -43,8 +42,11 @@ export default function HomeScreen(props) {
         setLoading(false);
         const result = response.slice(0, 3);
         setData(result);
+        if (result) {
+          addToDataBase(result);
+          alert('hey');
+        }
         setShow(true);
-        addToDataBase();
       })
 
       .catch((error) => {
@@ -57,6 +59,7 @@ export default function HomeScreen(props) {
           },
         ]);
       });
+    //hier waits until result is back then add them to database
   };
   /******** READ from Database ********/
 
@@ -79,15 +82,18 @@ export default function HomeScreen(props) {
   //       },
   //     );
   // }, []);
+
   /******** INSERT INTO DATABASE *********/
 
-  const addToDataBase = () => {
+  const addToDataBase = (result) => {
     if (entityText && entityText.length > 0) {
       const timestamp = firebase.firestore.FieldValue.serverTimestamp();
       const entityData = {
         text: entityText,
         authorID: userID,
         createdAt: timestamp,
+        //here instead of 0 i can put th index of the answer being chosen by user
+        answer: result[0].l1_text,
       };
       entityRef
         .add(entityData)
@@ -113,11 +119,13 @@ export default function HomeScreen(props) {
       </View>
     );
   };
+  /******** return *********/
 
   return (
     <View style={styles.body}>
       <Headers />
       <View style={styles.container}>
+        <Text style={styles.text}>What word do you want to look up?</Text>
         <View style={styles.formContainer}>
           <TextInput
             style={styles.input}
@@ -141,11 +149,12 @@ export default function HomeScreen(props) {
                 <FlatList
                   data={data}
                   keyExtractor={({ id }, index) => id}
+                  removeClippedSubviews={true}
                   renderItem={({ item }) => (
                     <>
-                      <Text style={styles.text}>
-                        --- Swipe right if you want this word to POP ---{'>'}
-                      </Text>
+                      {/* <Text style={styles.text}>
+                        --- Swipe right to save this word to POP ---{'>'}
+                      </Text> */}
                       <View style={styles.entityContainer}>
                         <Text style={styles.entityText}>
                           {item.l2_text} ({item.wortart.toLowerCase()}) :{' '}
