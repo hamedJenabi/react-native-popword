@@ -14,30 +14,42 @@ import { firebase } from '../../firebase/config';
 import Headers from '../../Components/Headers';
 import { SwipeListView } from 'react-native-swipe-list-view';
 
+// Let's sort the list too.
+// users.sort(function(a, b){
+//   if(a.text < b.text) { return -1; }
+//   if(a.text > b.text) { return 1; }
+//   return 0;
+// })
+//this link has the way to section list
+//https://snack.expo.io/@jemise111/react-native-swipe-list-view
+//
+
+/*************** List Screen **********/
 export default function ListScreen(props) {
   const [wordList, setWordList] = useState([]);
   const [animationIsRunning, setAnimationIsRunning] = useState(false);
 
   const entityRef = firebase.firestore().collection('wordlist');
   const userID = props.extraData.id;
+  const db = firebase.firestore();
 
   /************Swipe Functions*********/
-  const onSwipeValueChange = (swipeData) => {
-    const { key, value } = swipeData;
-    if (value < -Dimensions.get('window').width && !setAnimationIsRunning) {
-      setAnimationIsRunning = true;
-      Animated.timing(rowTranslateAnimatedValues[key], {
-        toValue: 0,
-        duration: 200,
-      }).start(() => {
-        const newData = [...listData];
-        const prevIndex = listData.findIndex((item) => item.key === key);
-        newData.splice(prevIndex, 1);
-        setListData(newData);
-        setAnimationIsRunning = false;
-      });
-    }
-  };
+  // const onSwipeValueChange = (swipeData) => {
+  //   const { key, value } = swipeData;
+  //   if (value < -Dimensions.get('window').width && !setAnimationIsRunning) {
+  //     setAnimationIsRunning = true;
+  //     Animated.timing(rowTranslateAnimatedValues[key], {
+  //       toValue: 0,
+  //       duration: 200,
+  //     }).start(() => {
+  //       const newData = [...listData];
+  //       const prevIndex = listData.findIndex((item) => item.key === key);
+  //       newData.splice(prevIndex, 1);
+  //       setListData(newData);
+  //       setAnimationIsRunning = false;
+  //     });
+  //   }
+  // };
 
   const closeRow = (rowMap, rowKey) => {
     if (rowMap[rowKey]) {
@@ -45,19 +57,35 @@ export default function ListScreen(props) {
     }
   };
   /************* DELETE also from firebase *******/
-  const deleteRow = async (rowMap, rowKey, txt) => {
-    // const res = await firebase
-    //   .firestore()
-    //   .collection('wordlist')
-    //   .where('text', '==', txt)
-    //   .delete();
-    // alert('delete');
+  const deleteRow = (rowMap, rowKey, txt) => {
+    //First the state variable will be updated here
     closeRow(rowMap, rowKey);
-
     const newData = [...wordList];
     const prevIndex = wordList.findIndex((item) => item.key === rowKey);
     newData.splice(prevIndex, 1);
     setWordList(newData);
+
+    //Here I get the item I want to remove from DB with WHERE
+    //,then using foreach to get
+    //all words that has the same text
+
+    const removedItem = db
+      .collection('wordlist')
+      .where('authorID', '==', userID)
+      .where('text', '==', txt)
+      .get()
+      .then(function (removedItem) {
+        removedItem.forEach(function (doc) {
+          doc.ref.delete();
+        });
+      })
+
+      .then(function () {
+        alert('Document successfully deleted!');
+      })
+      .catch(function (error) {
+        alert('Error removing document: ');
+      });
   };
 
   const onRowDidOpen = (rowKey) => {
@@ -85,7 +113,7 @@ export default function ListScreen(props) {
         },
       );
   }, []);
-  const renderEntity = ({ item, index }) => {
+  const renderItem = ({ item, index }) => {
     return (
       <Animated.View style={styles.listContainer}>
         <TouchableHighlight underlayColor={'#AAA'}>
@@ -108,7 +136,7 @@ export default function ListScreen(props) {
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.backRightBtn, styles.backRightBtnRight]}
-        onPress={() => deleteRow(rowMap, data.item.key, data.text)}
+        onPress={() => deleteRow(rowMap, data.item.key, data.item.text)}
       >
         <Text style={styles.backTextWhite}>Delete</Text>
       </TouchableOpacity>
@@ -124,9 +152,8 @@ export default function ListScreen(props) {
         {wordList && (
           <View>
             <SwipeListView
-              removeClippedSubviews={true}
               data={wordList}
-              renderItem={renderEntity}
+              renderItem={renderItem}
               renderHiddenItem={renderHiddenItem}
               leftOpenValue={75}
               rightOpenValue={-150}
@@ -134,9 +161,6 @@ export default function ListScreen(props) {
               previewOpenValue={-40}
               previewOpenDelay={3000}
               onRowDidOpen={onRowDidOpen}
-              rightOpenValue={-Dimensions.get('window').width}
-              onSwipeValueChange={onSwipeValueChange}
-              useNativeDriver={false}
             />
           </View>
         )}

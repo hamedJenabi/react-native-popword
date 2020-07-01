@@ -61,32 +61,8 @@ export default function Headers() {
   }, []);
 
   return (
-    <>
+    <View style={styles.container}>
       <View>
-        <Text
-          style={{
-            marginLeft: 10,
-            paddingTop: 10,
-            paddingBottom: 10,
-            alignItems: 'center',
-          }}
-        >
-          {user ? user.fullName : ''}
-        </Text>
-      </View>
-      <View style={styles.header}>
-        <Text style={styles.title}>POP WORD</Text>
-      </View>
-      <View>
-        {/* <View style={styles.switch}>
-          <Switch
-            trackColor={{ false: '#767577', true: '#81b0ff' }}
-            thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={isEnabled}
-          />
-        </View> */}
         <TouchableOpacity onPress={showMenuOnPress}>
           <Text style={styles.Hamburger}>{showNav ? 'X' : '☰'}</Text>
         </TouchableOpacity>
@@ -113,22 +89,35 @@ export default function Headers() {
             <TouchableOpacity style={styles.logOut} onPress={onPressLogout}>
               <Text style={styles.logOutText}>{logText}</Text>
             </TouchableOpacity>
-            {/* <Text style={styles.text}>{user.fullName}</Text> */}
           </View>
         ) : null}
       </View>
-    </>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10,
+    zIndex: 100,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   listContainer: {
+    flex: 1,
+
     width: '100%',
     zIndex: 100,
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'space-between',
     // position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    top: 0,
   },
 
   text: {
@@ -161,8 +150,9 @@ const styles = StyleSheet.create({
   },
   Hamburger: {
     fontSize: 26,
-    marginRight: 20,
+    marginLeft: 20,
     alignSelf: 'flex-end',
+    zIndex: 1000,
   },
   switch: {
     alignSelf: 'flex-start',

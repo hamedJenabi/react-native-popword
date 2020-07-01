@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import styles from './styles';
 import { firebase } from '../../firebase/config';
+import { pushNotifications } from '../../services/';
+
 import Headers from '../../Components/Headers';
 
 export default function HomeScreen(props) {
@@ -24,13 +26,13 @@ export default function HomeScreen(props) {
   const navigation = useNavigation();
 
   const onListButtonPress = () => {
-    navigation.navigate('List');
+    pushNotifications.localNotification();
   };
 
   /*************Fetching function ********/
 
   const fetching = () => {
-    fetch(`hidden`, {
+    fetch('hidden', {
       method: 'GET',
       headers: {
         'x-rapidapi-host': 'petapro-translate-v1.p.rapidapi.com',
@@ -44,7 +46,6 @@ export default function HomeScreen(props) {
         setData(result);
         if (result) {
           addToDataBase(result);
-          alert('hey');
         }
         setShow(true);
       })
@@ -139,6 +140,9 @@ export default function HomeScreen(props) {
           <TouchableOpacity style={styles.button} onPress={onSearchButtonPress}>
             <Text style={styles.buttonText}>Search</Text>
           </TouchableOpacity>
+          {/* <TouchableOpacity style={styles.button} onPress={onListButtonPress}>
+            <Text style={styles.buttonText}>notification</Text>
+          </TouchableOpacity> */}
         </View>
         <View style={{ padding: 24 }}>
           {show ? (
@@ -148,7 +152,7 @@ export default function HomeScreen(props) {
               <View>
                 <FlatList
                   data={data}
-                  keyExtractor={({ id }, index) => id}
+                  keyExtractor={({ id }, index) => id.toString()}
                   removeClippedSubviews={true}
                   renderItem={({ item }) => (
                     <>

@@ -12,7 +12,6 @@ import {
   SplashScreen,
 } from './src/screens';
 import { decode, encode } from 'base-64';
-
 if (!global.btoa) {
   global.btoa = encode;
 }
@@ -22,6 +21,9 @@ if (!global.atob) {
 
 const Stack = createStackNavigator();
 import { YellowBox } from 'react-native';
+
+//Header_2 will be the main header later using Stack options
+// import Headers_2 from './src/Components/Headers_2';
 
 export default function App() {
   YellowBox.ignoreWarnings(['Setting a timer']);
@@ -45,12 +47,16 @@ export default function App() {
             setLoading(false);
           });
       } else {
+        //THIS is 4 seconds waiting for SplashScreen to show
+        //and then it goes to Login/Home
         setTimeout(() => {
           setLoading(false);
-        }, 4000);
+        }, 5000);
       }
     });
   }, []);
+
+  //pushing Notification to users
 
   if (loading) {
     return (
@@ -69,14 +75,19 @@ export default function App() {
       <Stack.Navigator>
         {user ? (
           <>
-            <Stack.Screen name="Home">
+            <Stack.Screen
+              name="Home"
+              // options={{
+              //   headerLeft: () => <Headers_2 />,
+              // }}
+            >
               {(props) => <HomeScreen {...props} extraData={user} />}
             </Stack.Screen>
             <Stack.Screen name="List">
               {(props) => <ListScreen {...props} extraData={user} />}
             </Stack.Screen>
-            {/* <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Registration" component={RegistrationScreen} /> */}
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Registration" component={RegistrationScreen} />
           </>
         ) : (
           <>
