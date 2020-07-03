@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 import {
+  AsyncStorage,
   FlatList,
   Keyboard,
   Text,
@@ -11,34 +12,210 @@ import {
 } from 'react-native';
 import styles from './styles';
 import { firebase } from '../../firebase/config';
-import { pushNotifications } from '../../services/';
+import Constants from 'expo-constants';
+// import * as Notifications from 'expo-notifications';
+import * as Notifications from 'expo-notifications';
 
+import * as Permissions from 'expo-permissions';
 import Headers from '../../Components/Headers';
+import pushNotification from '../../functions/pushNotification';
 
 export default function HomeScreen(props) {
   const [entityText, setEntityText] = useState('');
   const [isLoading, setLoading] = useState(true);
   const [show, setShow] = useState(false);
   const [data, setData] = useState([]);
+  const [expoToken, setExpoToken] = useState('');
 
   const entityRef = firebase.firestore().collection('wordlist');
   const userID = props.extraData.id;
   const navigation = useNavigation();
 
-  const onListButtonPress = () => {
-    pushNotifications.localNotification();
-  };
+  /*******try pushing a notificatio *********/
 
+  const onPushNotificationButtonPress = async (title, body) => {
+    let previousToken = await AsyncStorage.getItem('pushToken');
+    setExpoToken(previousToken);
+
+    Notifications.setNotificationHandler({
+      handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+      }),
+    });
+    // await Notifications.cancelAllScheduledNotificationsAsync();
+    // Notifications.scheduleNotificationAsync({
+    //   content: {
+    //     title: 'popword!',
+    //     subtitle: 'subpopword',
+    //     body: 'Change sides!',
+    //     color: 'red',
+    //     backgroundColor: 'white',
+    //   },
+    //   trigger: {
+    //     seconds: 2,
+    //   },
+    // });
+    // Notifications.presentNotificationAsync({
+    //   title: 'Look at that notification',
+    //   body: "I'm so proud of myself!",
+    // });
+    // Notifications.scheduleNotificationAsync();
+
+    // Notifications.scheduleNotificationAsync(
+    //   {
+    //     content: {
+    //       title: 'Remember to smoke water!',
+    //     },
+    //     trigger: {
+    //       seconds: 60,
+    //       repeats: true,
+    //     },
+    //   },
+    // );
+    // Notifications.scheduleNotificationAsync({
+    //   content: {
+    //     title: "Time's up!",
+    //     body: 'Change sides!',
+    //   },
+    //   trigger: {
+    //     seconds: 1,
+    //   },
+    // });
+
+    // const message = {
+    //   to: previousToken,
+    //   sound: 'default',
+    //   title: { title },
+    //   body: { body },
+    //   data: { data: `${title} - ${body}` },
+    // };
+
+    // await fetch('https://exp.host/--/api/v2/push/send', {
+    //   method: 'POST',
+    //   headers: {
+    //     Accept: 'application/json',
+    //     'Accept-encoding': 'gzip, deflate',
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(message),
+    // });
+
+    /************* */
+    // return fetch('https://exp.host/--/api/v2/push/send', {
+    //   body: JSON.stringify({
+    //     to: previousToken,
+    //     title: 'Hamed',
+    //     body: 'with return',
+    //     data: { message: 'Hamed' - 'with return' },
+    //   }),
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   method: 'POST',
+    // });
+    // console.log('TOki toki in home', previousToken);
+    // fetch('https://exp.host/--/api/v2/push/send', {
+    //   body: JSON.stringify({
+    //     to: previousToken,
+    //     title: title,
+    //     body: body,
+    //     data: { message: `${title} - ${body}` },
+    //   }),
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   method: 'POST',
+    // });
+  };
+  // let response = await fetch('https://exp.host/--/api/v2/push/send', {
+  //   method: 'POST',
+  //   headers: {
+  //     Accept: 'application/json',
+  //     'Content-Type': 'application/json',
+  //   },
+  //   body: JSON.stringify({
+  //     to: previousToken,
+  //     sound: 'default',
+  //     title: 'Demo',
+  //     body: 'Demo Notification',
+  //   }),
+  // });
+
+  // if (Constants.isDevice) {
+  //   const { status: existingStatus } = await Permissions.getAsync(
+  //     Permissions.NOTIFICATIONS,
+  //   );
+  //   let finalStatus = existingStatus;
+  //   if (existingStatus !== 'granted') {
+  //     const { status } = await Permissions.askAsync(
+  //       Permissions.NOTIFICATIONS,
+  //     );
+  //     finalStatus = status;
+  //   }
+  //   if (finalStatus !== 'granted') {
+  //     alert('Failed to get push token for push notification!');
+  //     return;
+  //   }
+  // }
+  //   const expoToken = await Notifications.getExpoPushTokenAsync();
+  //   const deviceToken = await Notifications.getDevicePushTokenAsync();
+  //   console.log('token', expoToken.data);
+  //   console.log('token_2', deviceToken);
+  //   // AsyncStorage.setItem('pushToken', token.data);
+
+  //   await sendPushNotification();
+  // };
+
+  // const sendPushNotification = async () => {
+  //   const expoToken = await Notifications.getExpoPushTokenAsync();
+  //   const deviceToken = await Notifications.getDevicePushTokenAsync();
+
+  //   const message = {
+  //     to: expoToken.data,
+  //     sound: 'default',
+  //     title: 'Original Title',
+  //     body: 'And here is the body!',
+  //   };
+  // await fetch('https://exp.host/--/api/v2/push/send', {
+  //   method: 'POST',
+  //   headers: {
+  //     Accept: 'application/json',
+  //     'Content-Type': 'application/json',
+  //     'accept-encoding': 'gzip, deflate',
+  //     host: 'exp.host',
+  //   },
+  //   body: JSON.stringify({
+  //     to: previousToken,
+  //     title: 'New Notification',
+  //     body: 'The notification hamed!',
+  //     priority: 'high',
+  //     sound: 'default',
+  //     channelId: 'default',
+  //   }),
+  // });
+
+  //     .then((response) => response.json())
+  //     .then((responseJson) => {})
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
   /*************Fetching function ********/
 
   const fetching = () => {
-    fetch('hidden', {
-      method: 'GET',
-      headers: {
-        'x-rapidapi-host': 'petapro-translate-v1.p.rapidapi.com',
-        'x-rapidapi-key': '0a868878b3msha696a9ae4c53aaep18f96fjsn41fe05117014',
+    fetch(
+      `hidden`,
+      {
+        method: 'GET',
+        headers: {
+          'x-rapidapi-host': 'petapro-translate-v1.p.rapidapi.com',
+          'x-rapidapi-key':
+            '0a868878b3msha696a9ae4c53aaep18f96fjsn41fe05117014',
+        },
       },
-    })
+    )
       .then((res) => res.json())
       .then((response) => {
         setLoading(false);
@@ -51,7 +228,7 @@ export default function HomeScreen(props) {
       })
 
       .catch((error) => {
-        Alert.alert('Error', 'Word not found', [
+        alert('Error', 'Word not found', [
           {
             text: 'ok',
             onPress: () => {
@@ -106,7 +283,70 @@ export default function HomeScreen(props) {
           alert(error);
         });
     }
+    // notification(result);
+    pushNotification(entityText, result);
   };
+  /*--------Schedule the notification *********/
+  // const notification = (result) => {
+  //   Notifications.setNotificationHandler({
+  //     handleNotification: async () => ({
+  //       shouldShowAlert: true,
+  //       shouldPlaySound: false,
+  //       shouldSetBadge: false,
+  //     }),
+  //   });
+  //   Notifications.scheduleNotificationAsync({
+  //     content: {
+  //       title: 'POP WORD',
+  //       body: `${entityText} (${result[0].wortart.toLowerCase()}) : ${
+  //         result[0].l1_text
+  //       } , ${result[2].l1_text}`,
+  //       color: 'red',
+  //     },
+  //     trigger: {
+  //       //5 seconds  from now (Test)
+  //       seconds: 5,
+  //     },
+  //   });
+  //   Notifications.scheduleNotificationAsync({
+  //     content: {
+  //       title: 'POP WORD',
+  //       body: `${entityText} ${result[0].wortart.toLowerCase()} : ${
+  //         result[0].l1_text
+  //       }`,
+  //       color: 'red',
+  //     },
+  //     trigger: {
+  //       //3 days from now
+  //       seconds: 3 * 24 * 60 * 60 * 1000,
+  //     },
+  //   });
+
+  //   Notifications.scheduleNotificationAsync({
+  //     content: {
+  //       title: 'POP WORD',
+  //       body: `${entityText}   :  ${result[0].l1_text}`,
+  //       color: 'red',
+  //     },
+  //     trigger: {
+  //       //7 days from now
+  //       seconds: 7 * 24 * 60 * 60 * 1000,
+  //     },
+  //   });
+  //   Notifications.scheduleNotificationAsync({
+  //     content: {
+  //       title: 'POP WORD',
+  //       body: `${entityText} ${result[0].wortart.toLowerCase()} : ${
+  //         result[0].l1_text
+  //       } `,
+  //       color: 'red',
+  //     },
+  //     trigger: {
+  //       //7 days from now
+  //       seconds: 30 * 24 * 60 * 60 * 1000,
+  //     },
+  //   });
+  // };
   /******** Search for the answer *********/
 
   const onSearchButtonPress = () => {
@@ -140,9 +380,12 @@ export default function HomeScreen(props) {
           <TouchableOpacity style={styles.button} onPress={onSearchButtonPress}>
             <Text style={styles.buttonText}>Search</Text>
           </TouchableOpacity>
-          {/* <TouchableOpacity style={styles.button} onPress={onListButtonPress}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => onPushNotificationButtonPress('hello', 'Alenio')}
+          >
             <Text style={styles.buttonText}>notification</Text>
-          </TouchableOpacity> */}
+          </TouchableOpacity>
         </View>
         <View style={{ padding: 24 }}>
           {show ? (

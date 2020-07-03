@@ -81,7 +81,7 @@ export default function ListScreen(props) {
       })
 
       .then(function () {
-        alert('Document successfully deleted!');
+        // alert('Document successfully deleted!');
       })
       .catch(function (error) {
         alert('Error removing document: ');
