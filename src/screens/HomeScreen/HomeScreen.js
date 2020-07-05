@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import {
   AsyncStorage,
+  SafeAreaView,
   FlatList,
   Keyboard,
   Text,
@@ -19,6 +20,7 @@ import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 import Headers from '../../Components/Headers';
 import pushNotification from '../../functions/pushNotification';
+import CustomHeader from '../../Components/CustomHeader';
 
 export default function HomeScreen(props) {
   const [entityText, setEntityText] = useState('');
@@ -205,17 +207,13 @@ export default function HomeScreen(props) {
   /*************Fetching function ********/
 
   const fetching = () => {
-    fetch(
-      `hidden`,
-      {
-        method: 'GET',
-        headers: {
-          'x-rapidapi-host': 'petapro-translate-v1.p.rapidapi.com',
-          'x-rapidapi-key':
-            '0a868878b3msha696a9ae4c53aaep18f96fjsn41fe05117014',
-        },
+    fetch(`hidden`, {
+      method: 'GET',
+      headers: {
+        'x-rapidapi-host': 'petapro-translate-v1.p.rapidapi.com',
+        'x-rapidapi-key': '0a868878b3msha696a9ae4c53aaep18f96fjsn41fe05117014',
       },
-    )
+    })
       .then((res) => res.json())
       .then((response) => {
         setLoading(false);
@@ -363,8 +361,9 @@ export default function HomeScreen(props) {
   /******** return *********/
 
   return (
-    <View style={styles.body}>
-      <Headers />
+    <SafeAreaView style={styles.body}>
+      {/* <Headers /> */}
+      <CustomHeader title="Home" />
       <View style={styles.container}>
         <Text style={styles.text}>What word do you want to look up?</Text>
         <View style={styles.formContainer}>
@@ -429,6 +428,6 @@ export default function HomeScreen(props) {
         </View>
       )} */}
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

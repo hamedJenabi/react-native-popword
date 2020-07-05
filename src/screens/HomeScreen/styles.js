@@ -7,6 +7,7 @@ export default StyleSheet.create({
   },
   body: {
     flex: 1,
+    marginTop: 50,
   },
   formContainer: {
     flexDirection: 'row',

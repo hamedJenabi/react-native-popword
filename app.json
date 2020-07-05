@@ -4,7 +4,7 @@
     "slug": "react-native-popword",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/countShirty.png",
+    "icon": "./assets/icon.png",
     "splash": {
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"

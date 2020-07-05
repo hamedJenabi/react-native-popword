@@ -3,8 +3,17 @@ import { firebase } from './src/firebase/config';
 
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Alert, Platform, AsyncStorage } from 'react-native';
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from '@react-navigation/drawer';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import { Alert, Button, Platform, Image, AsyncStorage } from 'react-native';
 
 /******** expo notification Modules *********/
 import { Notifications } from 'expo';
@@ -30,13 +39,71 @@ if (!global.btoa) {
 if (!global.atob) {
   global.atob = decode;
 }
-
+const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 import { YellowBox } from 'react-native';
 
-//Header_2 will be the main header later using Stack options
-import Headers_2 from './src/Components/Headers_2';
+import CustomDrawerToggle from './src/Components/CustomHeader';
 
+/************* TabNavigation *********/
+// function TabNavigation(props) {
+//   return (
+//     <Tab.Navigator
+//       screenOptions={({ route }) => ({
+//         tabBarIcon: ({ focused, color, size }) => {
+//           let iconName;
+
+//           if (route.name === 'Home') {
+//             iconName = focused
+//               ? require('./assets/home_focused.png')
+//               : require('./assets/home.png');
+//           } else if (route.name === 'List') {
+//             iconName = focused
+//               ? require('./assets/list_focused.png')
+//               : require('./assets/list.png');
+//           } else if (route.name === 'Setting') {
+//             iconName = focused
+//               ? require('./assets/setting_focused.png')
+//               : require('./assets/setting.png');
+//           }
+
+//           // You can return any component that you like here!
+//           return (
+//             <Image
+//               source={iconName}
+//               style={{ width: 20, height: 20 }}
+//               resizeMode="contain"
+//             />
+//           );
+//         },
+//       })}
+//       tabBarOptions={{
+//         activeTintColor: 'tomato',
+//         inactiveTintColor: 'gray',
+//       }}
+//     >
+//       {props.user ? (
+//         <>
+//           <Tab.Screen name="Home">
+//             {(props) => <HomeScreen {...props} extraData={props.user} />}
+//           </Tab.Screen>
+//           <Tab.Screen name="List">
+//             {(props) => <ListScreen {...props} extraData={props.user} />}
+//           </Tab.Screen>
+//           <Tab.Screen name="Setting">
+//             {(props) => <ListScreen {...props} extraData={props.user} />}
+//           </Tab.Screen>
+//         </>
+//       ) : (
+//         <>
+//           <Tab.Screen name="Login" component={LoginScreen} />
+//           <Tab.Screen name="Registration" component={RegistrationScreen} />
+//         </>
+//       )}
+//     </Tab.Navigator>
+//   );
+// }
 /*********Get Token and store it in AssyncStorage *********/
 
 export default function App() {
@@ -120,30 +187,63 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      {/* <Drawer.Navigator initialRouteName="tabNav">
+        <Drawer.Screen name="Home" component={TabNavigation} user={user} />
+        <Drawer.Screen name="Logout" component={LoginScreen} />
+      </Drawer.Navigator> */}
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+
+            if (route.name === 'Home') {
+              iconName = focused
+                ? require('./assets/home_focused.png')
+                : require('./assets/home.png');
+            } else if (route.name === 'List') {
+              iconName = focused
+                ? require('./assets/list_focused.png')
+                : require('./assets/list.png');
+            } else if (route.name === 'Setting') {
+              iconName = focused
+                ? require('./assets/setting_focused.png')
+                : require('./assets/setting.png');
+            }
+
+            // You can return any component that you like here!
+            return (
+              <Image
+                source={iconName}
+                style={{ width: 20, height: 20 }}
+                resizeMode="contain"
+              />
+            );
+          },
+        })}
+        tabBarOptions={{
+          activeTintColor: 'tomato',
+          inactiveTintColor: 'gray',
+        }}
+      >
         {user ? (
           <>
-            <Stack.Screen
-              name="Home"
-              options={{
-                headerLeft: () => <Headers_2 />,
-              }}
-            >
+            <Tab.Screen name="Home">
               {(props) => <HomeScreen {...props} extraData={user} />}
-            </Stack.Screen>
-            <Stack.Screen name="List">
+            </Tab.Screen>
+            <Tab.Screen name="List">
               {(props) => <ListScreen {...props} extraData={user} />}
-            </Stack.Screen>
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Registration" component={RegistrationScreen} />
+            </Tab.Screen>
+            <Tab.Screen name="Setting">
+              {(props) => <ListScreen {...props} extraData={user} />}
+            </Tab.Screen>
           </>
         ) : (
           <>
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Registration" component={RegistrationScreen} />
+            <Tab.Screen name="Login" component={LoginScreen} />
+            <Tab.Screen name="Registration" component={RegistrationScreen} />
           </>
         )}
-      </Stack.Navigator>
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }

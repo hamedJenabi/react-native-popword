@@ -13,6 +13,7 @@ import {
 import { firebase } from '../../firebase/config';
 import Headers from '../../Components/Headers';
 import { SwipeListView } from 'react-native-swipe-list-view';
+import CustomHeader from '../../Components/CustomHeader';
 
 // Let's sort the list too.
 // users.sort(function(a, b){
@@ -145,7 +146,7 @@ export default function ListScreen(props) {
 
   return (
     <SafeAreaView style={styles.body}>
-      <Headers />
+      <CustomHeader title="History" />
       <View style={styles.container}>
         <Text style={styles.title}>Swipe left for more options</Text>
 
@@ -172,6 +173,7 @@ export default function ListScreen(props) {
 const styles = StyleSheet.create({
   body: {
     flex: 1,
+    marginTop: 50,
   },
   container: {
     flex: 1,
