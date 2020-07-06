@@ -4,6 +4,7 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    marginTop: 50,
   },
   body: {
     flex: 1,
@@ -39,19 +40,30 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  rowBack: {
+    borderRadius: 4,
+    width: '90%',
+    alignSelf: 'center',
+    padding: 15,
+    marginBottom: 10,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   buttonText: {
     color: 'white',
     fontSize: 16,
   },
   listContainer: {
     marginTop: 20,
-    padding: 20,
   },
   entityContainer: {
+    backgroundColor: '#e6fffc',
+
     borderRadius: 4,
     borderWidth: 0.1,
-    borderColor: 'blue',
-    padding: 15,
+    borderColor: '#1affe4',
+    padding: 17,
     marginBottom: 10,
     shadowColor: 'blue',
     shadowOffset: {
@@ -72,5 +84,32 @@ export default StyleSheet.create({
     paddingBottom: 5,
     alignSelf: 'center',
     color: '#333333',
+  },
+
+  scrollView: {
+    marginHorizontal: 20,
+  },
+  backTextWhite: {
+    alignSelf: 'center',
+    color: '#FFF',
+  },
+
+  backRightBtn: {
+    bottom: 0,
+    justifyContent: 'center',
+    position: 'absolute',
+    top: 0,
+    width: 75,
+    borderRadius: 4,
+  },
+  backRightBtnLeft: {
+    backgroundColor: 'blue',
+    right: 75,
+    borderRadius: 4,
+  },
+  backRightBtnRight: {
+    backgroundColor: 'red',
+    right: 0,
+    borderRadius: 4,
   },
 });

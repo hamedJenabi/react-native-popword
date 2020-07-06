@@ -49,6 +49,9 @@ export default function RegistrationScreen({ navigation }) {
   };
   return (
     <View style={styles.container}>
+      <View style={{ marginBottom: 100, marginTop: 100 }}>
+        <Image source={require('../../../assets/popcorn.png')} />
+      </View>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always"

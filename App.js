@@ -13,7 +13,7 @@ import {
 } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { Alert, Button, Platform, Image, AsyncStorage } from 'react-native';
+import { Platform, AsyncStorage, SafeAreaView } from 'react-native';
 
 /******** expo notification Modules *********/
 import { Notifications } from 'expo';
@@ -44,66 +44,11 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 import { YellowBox } from 'react-native';
 
-import CustomDrawerToggle from './src/Components/CustomHeader';
+import CustomHeader from './src/Components/CustomHeader';
+import TabNavigation from './src/Components/TabNavigation';
+import CostumDrawerContent from './src/Components/CostumDrawerContent';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
-/************* TabNavigation *********/
-// function TabNavigation(props) {
-//   return (
-//     <Tab.Navigator
-//       screenOptions={({ route }) => ({
-//         tabBarIcon: ({ focused, color, size }) => {
-//           let iconName;
-
-//           if (route.name === 'Home') {
-//             iconName = focused
-//               ? require('./assets/home_focused.png')
-//               : require('./assets/home.png');
-//           } else if (route.name === 'List') {
-//             iconName = focused
-//               ? require('./assets/list_focused.png')
-//               : require('./assets/list.png');
-//           } else if (route.name === 'Setting') {
-//             iconName = focused
-//               ? require('./assets/setting_focused.png')
-//               : require('./assets/setting.png');
-//           }
-
-//           // You can return any component that you like here!
-//           return (
-//             <Image
-//               source={iconName}
-//               style={{ width: 20, height: 20 }}
-//               resizeMode="contain"
-//             />
-//           );
-//         },
-//       })}
-//       tabBarOptions={{
-//         activeTintColor: 'tomato',
-//         inactiveTintColor: 'gray',
-//       }}
-//     >
-//       {props.user ? (
-//         <>
-//           <Tab.Screen name="Home">
-//             {(props) => <HomeScreen {...props} extraData={props.user} />}
-//           </Tab.Screen>
-//           <Tab.Screen name="List">
-//             {(props) => <ListScreen {...props} extraData={props.user} />}
-//           </Tab.Screen>
-//           <Tab.Screen name="Setting">
-//             {(props) => <ListScreen {...props} extraData={props.user} />}
-//           </Tab.Screen>
-//         </>
-//       ) : (
-//         <>
-//           <Tab.Screen name="Login" component={LoginScreen} />
-//           <Tab.Screen name="Registration" component={RegistrationScreen} />
-//         </>
-//       )}
-//     </Tab.Navigator>
-//   );
-// }
 /*********Get Token and store it in AssyncStorage *********/
 
 export default function App() {
@@ -135,7 +80,7 @@ export default function App() {
         //and then it goes to Login/Home
         setTimeout(() => {
           setLoading(false);
-        }, 2500);
+        }, 3000);
       }
     });
   }, []);
@@ -187,11 +132,18 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      {/* <Drawer.Navigator initialRouteName="tabNav">
-        <Drawer.Screen name="Home" component={TabNavigation} user={user} />
+      <Drawer.Navigator
+        drawerStyle={{
+          backgroundColor: '#e6fffc',
+          width: 340,
+        }}
+        initialRouteName="Home"
+        drawerContent={(props) => CostumDrawerContent(props)}
+      >
+        <Drawer.Screen name="Home" component={TabNavigation} />
         <Drawer.Screen name="Logout" component={LoginScreen} />
-      </Drawer.Navigator> */}
-      <Tab.Navigator
+      </Drawer.Navigator>
+      {/* <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
@@ -243,7 +195,7 @@ export default function App() {
             <Tab.Screen name="Registration" component={RegistrationScreen} />
           </>
         )}
-      </Tab.Navigator>
+      </Tab.Navigator> */}
     </NavigationContainer>
   );
 }

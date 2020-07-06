@@ -28,7 +28,7 @@ import CustomHeader from '../../Components/CustomHeader';
 /*************** List Screen **********/
 export default function ListScreen(props) {
   const [wordList, setWordList] = useState([]);
-  const [animationIsRunning, setAnimationIsRunning] = useState(false);
+  // const [animationIsRunning, setAnimationIsRunning] = useState(false);
 
   const entityRef = firebase.firestore().collection('wordlist');
   const userID = props.extraData.id;
@@ -177,16 +177,8 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    marginTop: 50,
     borderWidth: 0.1,
-    borderColor: '#d6d7da',
-    shadowColor: '#ff33b5e5',
-    shadowOffset: {
-      width: 1,
-      height: 0,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 1.01,
-    elevation: 1,
   },
   listContainer: {
     alignSelf: 'center',
@@ -204,7 +196,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 1.01,
     elevation: 1,
-    backgroundColor: '#1ed4b0',
+    backgroundColor: '#e6fffc',
     justifyContent: 'center',
   },
   rowBack: {

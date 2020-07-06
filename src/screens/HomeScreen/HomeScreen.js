@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-
+import { SwipeListView } from 'react-native-swipe-list-view';
 import {
   AsyncStorage,
   SafeAreaView,
   FlatList,
   Keyboard,
+  Animated,
   Text,
   TextInput,
   TouchableOpacity,
@@ -18,7 +19,6 @@ import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 
 import * as Permissions from 'expo-permissions';
-import Headers from '../../Components/Headers';
 import pushNotification from '../../functions/pushNotification';
 import CustomHeader from '../../Components/CustomHeader';
 
@@ -33,187 +33,20 @@ export default function HomeScreen(props) {
   const userID = props.extraData.id;
   const navigation = useNavigation();
 
-  /*******try pushing a notificatio *********/
-
-  const onPushNotificationButtonPress = async (title, body) => {
-    let previousToken = await AsyncStorage.getItem('pushToken');
-    setExpoToken(previousToken);
-
-    Notifications.setNotificationHandler({
-      handleNotification: async () => ({
-        shouldShowAlert: true,
-        shouldPlaySound: false,
-        shouldSetBadge: false,
-      }),
-    });
-    // await Notifications.cancelAllScheduledNotificationsAsync();
-    // Notifications.scheduleNotificationAsync({
-    //   content: {
-    //     title: 'popword!',
-    //     subtitle: 'subpopword',
-    //     body: 'Change sides!',
-    //     color: 'red',
-    //     backgroundColor: 'white',
-    //   },
-    //   trigger: {
-    //     seconds: 2,
-    //   },
-    // });
-    // Notifications.presentNotificationAsync({
-    //   title: 'Look at that notification',
-    //   body: "I'm so proud of myself!",
-    // });
-    // Notifications.scheduleNotificationAsync();
-
-    // Notifications.scheduleNotificationAsync(
-    //   {
-    //     content: {
-    //       title: 'Remember to smoke water!',
-    //     },
-    //     trigger: {
-    //       seconds: 60,
-    //       repeats: true,
-    //     },
-    //   },
-    // );
-    // Notifications.scheduleNotificationAsync({
-    //   content: {
-    //     title: "Time's up!",
-    //     body: 'Change sides!',
-    //   },
-    //   trigger: {
-    //     seconds: 1,
-    //   },
-    // });
-
-    // const message = {
-    //   to: previousToken,
-    //   sound: 'default',
-    //   title: { title },
-    //   body: { body },
-    //   data: { data: `${title} - ${body}` },
-    // };
-
-    // await fetch('https://exp.host/--/api/v2/push/send', {
-    //   method: 'POST',
-    //   headers: {
-    //     Accept: 'application/json',
-    //     'Accept-encoding': 'gzip, deflate',
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(message),
-    // });
-
-    /************* */
-    // return fetch('https://exp.host/--/api/v2/push/send', {
-    //   body: JSON.stringify({
-    //     to: previousToken,
-    //     title: 'Hamed',
-    //     body: 'with return',
-    //     data: { message: 'Hamed' - 'with return' },
-    //   }),
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   method: 'POST',
-    // });
-    // console.log('TOki toki in home', previousToken);
-    // fetch('https://exp.host/--/api/v2/push/send', {
-    //   body: JSON.stringify({
-    //     to: previousToken,
-    //     title: title,
-    //     body: body,
-    //     data: { message: `${title} - ${body}` },
-    //   }),
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   method: 'POST',
-    // });
-  };
-  // let response = await fetch('https://exp.host/--/api/v2/push/send', {
-  //   method: 'POST',
-  //   headers: {
-  //     Accept: 'application/json',
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify({
-  //     to: previousToken,
-  //     sound: 'default',
-  //     title: 'Demo',
-  //     body: 'Demo Notification',
-  //   }),
-  // });
-
-  // if (Constants.isDevice) {
-  //   const { status: existingStatus } = await Permissions.getAsync(
-  //     Permissions.NOTIFICATIONS,
-  //   );
-  //   let finalStatus = existingStatus;
-  //   if (existingStatus !== 'granted') {
-  //     const { status } = await Permissions.askAsync(
-  //       Permissions.NOTIFICATIONS,
-  //     );
-  //     finalStatus = status;
-  //   }
-  //   if (finalStatus !== 'granted') {
-  //     alert('Failed to get push token for push notification!');
-  //     return;
-  //   }
-  // }
-  //   const expoToken = await Notifications.getExpoPushTokenAsync();
-  //   const deviceToken = await Notifications.getDevicePushTokenAsync();
-  //   console.log('token', expoToken.data);
-  //   console.log('token_2', deviceToken);
-  //   // AsyncStorage.setItem('pushToken', token.data);
-
-  //   await sendPushNotification();
-  // };
-
-  // const sendPushNotification = async () => {
-  //   const expoToken = await Notifications.getExpoPushTokenAsync();
-  //   const deviceToken = await Notifications.getDevicePushTokenAsync();
-
-  //   const message = {
-  //     to: expoToken.data,
-  //     sound: 'default',
-  //     title: 'Original Title',
-  //     body: 'And here is the body!',
-  //   };
-  // await fetch('https://exp.host/--/api/v2/push/send', {
-  //   method: 'POST',
-  //   headers: {
-  //     Accept: 'application/json',
-  //     'Content-Type': 'application/json',
-  //     'accept-encoding': 'gzip, deflate',
-  //     host: 'exp.host',
-  //   },
-  //   body: JSON.stringify({
-  //     to: previousToken,
-  //     title: 'New Notification',
-  //     body: 'The notification hamed!',
-  //     priority: 'high',
-  //     sound: 'default',
-  //     channelId: 'default',
-  //   }),
-  // });
-
-  //     .then((response) => response.json())
-  //     .then((responseJson) => {})
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
   /*************Fetching function ********/
 
   const fetching = () => {
-    fetch(`hidden`, {
-      method: 'GET',
-      headers: {
-        'x-rapidapi-host': 'petapro-translate-v1.p.rapidapi.com',
-        'x-rapidapi-key': '0a868878b3msha696a9ae4c53aaep18f96fjsn41fe05117014',
+    fetch(
+      `hidden,
+      {
+        method: 'GET',
+        headers: {
+          'x-rapidapi-host': 'petapro-translate-v1.p.rapidapi.com',
+          'x-rapidapi-key':
+            '0a868878b3msha696a9ae4c53aaep18f96fjsn41fe05117014',
+        },
       },
-    })
+    )
       .then((res) => res.json())
       .then((response) => {
         setLoading(false);
@@ -235,29 +68,7 @@ export default function HomeScreen(props) {
           },
         ]);
       });
-    //hier waits until result is back then add them to database
   };
-  /******** READ from Database ********/
-
-  // useEffect(() => {
-  //   entityRef
-  //     .where('authorID', '==', userID)
-  //     .orderBy('createdAt', 'desc')
-  //     .onSnapshot(
-  //       (querySnapshot) => {
-  //         const newEntities = [];
-  //         querySnapshot.forEach((doc) => {
-  //           const entity = doc.data();
-  //           entity.id = doc.id;
-  //           newEntities.push(entity);
-  //         });
-  //         setEntities(newEntities);
-  //       },
-  //       (error) => {
-  //         console.log(error);
-  //       },
-  //     );
-  // }, []);
 
   /******** INSERT INTO DATABASE *********/
 
@@ -281,70 +92,8 @@ export default function HomeScreen(props) {
           alert(error);
         });
     }
-    // notification(result);
     pushNotification(entityText, result);
   };
-  /*--------Schedule the notification *********/
-  // const notification = (result) => {
-  //   Notifications.setNotificationHandler({
-  //     handleNotification: async () => ({
-  //       shouldShowAlert: true,
-  //       shouldPlaySound: false,
-  //       shouldSetBadge: false,
-  //     }),
-  //   });
-  //   Notifications.scheduleNotificationAsync({
-  //     content: {
-  //       title: 'POP WORD',
-  //       body: `${entityText} (${result[0].wortart.toLowerCase()}) : ${
-  //         result[0].l1_text
-  //       } , ${result[2].l1_text}`,
-  //       color: 'red',
-  //     },
-  //     trigger: {
-  //       //5 seconds  from now (Test)
-  //       seconds: 5,
-  //     },
-  //   });
-  //   Notifications.scheduleNotificationAsync({
-  //     content: {
-  //       title: 'POP WORD',
-  //       body: `${entityText} ${result[0].wortart.toLowerCase()} : ${
-  //         result[0].l1_text
-  //       }`,
-  //       color: 'red',
-  //     },
-  //     trigger: {
-  //       //3 days from now
-  //       seconds: 3 * 24 * 60 * 60 * 1000,
-  //     },
-  //   });
-
-  //   Notifications.scheduleNotificationAsync({
-  //     content: {
-  //       title: 'POP WORD',
-  //       body: `${entityText}   :  ${result[0].l1_text}`,
-  //       color: 'red',
-  //     },
-  //     trigger: {
-  //       //7 days from now
-  //       seconds: 7 * 24 * 60 * 60 * 1000,
-  //     },
-  //   });
-  //   Notifications.scheduleNotificationAsync({
-  //     content: {
-  //       title: 'POP WORD',
-  //       body: `${entityText} ${result[0].wortart.toLowerCase()} : ${
-  //         result[0].l1_text
-  //       } `,
-  //       color: 'red',
-  //     },
-  //     trigger: {
-  //       //7 days from now
-  //       seconds: 30 * 24 * 60 * 60 * 1000,
-  //     },
-  //   });
-  // };
   /******** Search for the answer *********/
 
   const onSearchButtonPress = () => {
@@ -353,16 +102,34 @@ export default function HomeScreen(props) {
 
   const renderEntity = ({ item, index }) => {
     return (
-      <View style={styles.entityContainer}>
-        <Text style={styles.entityText}>{item.text}</Text>
-      </View>
+      <Animated.View style={styles.entityContainer}>
+        <TouchableHighlight underlayColor={'#AAA'}>
+          <Text style={styles.entityText}>{item.text}</Text>
+        </TouchableHighlight>
+      </Animated.View>
     );
   };
+  /******** hidden Items ******/
+  const renderHiddenItem = (data, rowMap) => (
+    <View style={styles.rowBack}>
+      <TouchableOpacity
+        style={[styles.backRightBtn, styles.backRightBtnLeft]}
+        onPress={() => closeRow(rowMap, data.item.key)}
+      >
+        <Text style={styles.backTextWhite}>Close</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.backRightBtn, styles.backRightBtnRight]}
+        onPress={() => deleteRow(rowMap, data.item.key, data.item.text)}
+      >
+        <Text style={styles.backTextWhite}>Delete</Text>
+      </TouchableOpacity>
+    </View>
+  );
   /******** return *********/
 
   return (
     <SafeAreaView style={styles.body}>
-      {/* <Headers /> */}
       <CustomHeader title="Home" />
       <View style={styles.container}>
         <Text style={styles.text}>What word do you want to look up?</Text>
@@ -379,12 +146,6 @@ export default function HomeScreen(props) {
           <TouchableOpacity style={styles.button} onPress={onSearchButtonPress}>
             <Text style={styles.buttonText}>Search</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => onPushNotificationButtonPress('hello', 'Alenio')}
-          >
-            <Text style={styles.buttonText}>notification</Text>
-          </TouchableOpacity>
         </View>
         <View style={{ padding: 24 }}>
           {show ? (
@@ -392,15 +153,17 @@ export default function HomeScreen(props) {
               <ActivityIndicator size="large" color="#0000ff" />
             ) : (
               <View>
-                <FlatList
+                <SwipeListView
                   data={data}
                   keyExtractor={({ id }, index) => id.toString()}
                   removeClippedSubviews={true}
+                  renderHiddenItem={renderHiddenItem}
+                  rightOpenValue={-150}
+                  previewRowKey={'0'}
+                  previewOpenValue={-40}
+                  previewOpenDelay={3000}
                   renderItem={({ item }) => (
                     <>
-                      {/* <Text style={styles.text}>
-                        --- Swipe right to save this word to POP ---{'>'}
-                      </Text> */}
                       <View style={styles.entityContainer}>
                         <Text style={styles.entityText}>
                           {item.l2_text} ({item.wortart.toLowerCase()}) :{' '}
@@ -417,16 +180,6 @@ export default function HomeScreen(props) {
             false
           )}
         </View>
-        {/* {entities && (
-        <View style={styles.listContainer}>
-          <FlatList
-            data={entities}
-            renderItem={renderEntity}
-            keyExtractor={(item) => item.id}
-            removeClippedSubviews={true}
-          />
-        </View>
-      )} */}
       </View>
     </SafeAreaView>
   );
