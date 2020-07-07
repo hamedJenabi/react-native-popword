@@ -129,20 +129,31 @@ export default function App() {
       </>
     );
   }
-
+  //instead of TabScreen I put Homescreen for now
   return (
     <NavigationContainer>
-      <Drawer.Navigator
-        drawerStyle={{
-          backgroundColor: '#e6fffc',
-          width: 340,
-        }}
-        initialRouteName="Home"
-        drawerContent={(props) => CostumDrawerContent(props)}
-      >
-        <Drawer.Screen name="Home" component={TabNavigation} />
-        <Drawer.Screen name="Logout" component={LoginScreen} />
-      </Drawer.Navigator>
+      {user ? (
+        <Drawer.Navigator
+          drawerStyle={{
+            backgroundColor: '#e6fffc',
+            width: 300,
+          }}
+          initialRouteName="Home"
+          drawerContent={(props) => CostumDrawerContent(props)}
+        >
+          <Drawer.Screen name="Home">
+            {(props) => <TabNavigation {...props} extraData={user} />}
+          </Drawer.Screen>
+          {/* <Drawer.Screen name="Login" component={LoginScreen} />
+          <Drawer.Screen name="Registration" component={RegistrationScreen} /> */}
+        </Drawer.Navigator>
+      ) : (
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Registration" component={RegistrationScreen} />
+        </Stack.Navigator>
+      )}
+
       {/* <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {

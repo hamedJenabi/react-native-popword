@@ -17,6 +17,7 @@ export default function CustomHeader(props) {
   const [isEnabled, setIsEnabled] = useState(false);
   const [logText, setLogText] = useState('Login');
   const [user, setUser] = useState(null);
+  const [username, setUsername] = useState(null);
   const [showNav, setShowNav] = useState(false);
   const navigation = useNavigation();
 
@@ -56,6 +57,7 @@ export default function CustomHeader(props) {
             const userData = document.data();
             setLogText('Logout');
             setUser(userData);
+            setUsername(userData.fullName);
           })
           .catch((error) => {
             alert('error');
@@ -125,9 +127,12 @@ export default function CustomHeader(props) {
           style={{
             flex: 1,
             justifyContent: 'center',
-            alignItems: 'center',
+            alignItems: 'flex-end',
+            marginRight: 10,
           }}
-        ></View>
+        >
+          <Text>{username}</Text>
+        </View>
       </SafeAreaView>
     </>
 

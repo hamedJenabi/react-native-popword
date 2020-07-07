@@ -8,7 +8,7 @@ const pushNotification = (text, res) => {
       shouldSetBadge: false,
     }),
   });
-  Notifications.scheduleNotificationAsync({
+  const identifier = Notifications.scheduleNotificationAsync({
     content: {
       title: 'POP WORD',
       body: `${text} (${res[0].wortart.toLowerCase()}) : ${res[0].l1_text} , ${

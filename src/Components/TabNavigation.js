@@ -41,27 +41,27 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 import { YellowBox } from 'react-native';
 
-export default function TabNavigation() {
-  const [loading, setLoading] = useState(true);
+export default function TabNavigation(props) {
+  const userData = props.extraData;
 
   /********** Getting the USER from firebase ************/
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    const usersRef = firebase.firestore().collection('users');
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        usersRef
-          .doc(user.uid)
-          .get()
-          .then((document) => {
-            const userData = document.data();
-            setUser(userData);
-          })
-          .catch((error) => {});
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   const usersRef = firebase.firestore().collection('users');
+  //   firebase.auth().onAuthStateChanged((user) => {
+  //     if (user) {
+  //       usersRef
+  //         .doc(user.uid)
+  //         .get()
+  //         .then((document) => {
+  //           const userData = document.data();
+  //           setUser(userData);
+  //         })
+  //         .catch((error) => {});
+  //     }
+  //   });
+  // }, []);
 
   return (
     <Tab.Navigator
@@ -98,16 +98,16 @@ export default function TabNavigation() {
         inactiveTintColor: 'gray',
       }}
     >
-      {user ? (
+      {userData ? (
         <>
           <Tab.Screen name="Home">
-            {(props) => <HomeScreen {...props} extraData={user} />}
+            {(props) => <HomeScreen {...props} extraData={userData} />}
           </Tab.Screen>
           <Tab.Screen name="List">
-            {(props) => <ListScreen {...props} extraData={user} />}
+            {(props) => <ListScreen {...props} extraData={userData} />}
           </Tab.Screen>
           <Tab.Screen name="Setting">
-            {(props) => <ListScreen {...props} extraData={user} />}
+            {(props) => <ListScreen {...props} extraData={userData} />}
           </Tab.Screen>
         </>
       ) : (

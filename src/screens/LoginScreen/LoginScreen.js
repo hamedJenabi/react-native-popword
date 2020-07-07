@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import { firebase } from '../../firebase/config';
 
-import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  AsyncStorage,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 
@@ -29,7 +36,11 @@ export default function LoginScreen({ navigation }) {
               return;
             }
             const user = firestoreDocument.data();
-            navigation.navigate('Home', { user });
+            // AsyncStorage.setItem('signedIn', true);
+
+            // {
+            //   user ? navigation.navigate('Home', { user }) : null;
+            // }
           })
           .catch((error) => {
             alert(error);
@@ -42,7 +53,9 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../../../assets/popcorn.png')} />
+      <View style={{ marginBottom: 50, marginTop: 50 }}>
+        <Image source={require('../../../assets/popcorn.png')} />
+      </View>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always"

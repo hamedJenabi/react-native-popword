@@ -119,7 +119,7 @@ export default function ListScreen(props) {
       <Animated.View style={styles.listContainer}>
         <TouchableHighlight underlayColor={'#AAA'}>
           <Text style={styles.text}>
-            {item.text} : {item.answer}
+            {item.text} {item.answer}
           </Text>
         </TouchableHighlight>
       </Animated.View>
@@ -129,12 +129,6 @@ export default function ListScreen(props) {
   const renderHiddenItem = (data, rowMap) => (
     <View style={styles.rowBack}>
       <Text>Left</Text>
-      <TouchableOpacity
-        style={[styles.backRightBtn, styles.backRightBtnLeft]}
-        onPress={() => closeRow(rowMap, data.item.key)}
-      >
-        <Text style={styles.backTextWhite}>Close</Text>
-      </TouchableOpacity>
       <TouchableOpacity
         style={[styles.backRightBtn, styles.backRightBtnRight]}
         onPress={() => deleteRow(rowMap, data.item.key, data.item.text)}
@@ -157,7 +151,8 @@ export default function ListScreen(props) {
               renderItem={renderItem}
               renderHiddenItem={renderHiddenItem}
               leftOpenValue={75}
-              rightOpenValue={-150}
+              rightOpenValue={-75}
+              disableRightSwipe={true}
               previewRowKey={'0'}
               previewOpenValue={-40}
               previewOpenDelay={3000}
@@ -196,7 +191,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 1.01,
     elevation: 1,
-    backgroundColor: '#e6fffc',
+    backgroundColor: '#ccfff9',
     justifyContent: 'center',
   },
   rowBack: {
@@ -205,7 +200,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     padding: 15,
     marginBottom: 10,
-    backgroundColor: '#DDD',
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',

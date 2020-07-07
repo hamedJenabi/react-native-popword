@@ -63,7 +63,7 @@ export default StyleSheet.create({
     borderRadius: 4,
     borderWidth: 0.1,
     borderColor: '#1affe4',
-    padding: 17,
+    padding: 16,
     marginBottom: 10,
     shadowColor: 'blue',
     shadowOffset: {
@@ -92,22 +92,17 @@ export default StyleSheet.create({
   backTextWhite: {
     alignSelf: 'center',
     color: '#FFF',
+    textAlign: 'center',
   },
 
   backRightBtn: {
     bottom: 0,
+    maxHeight: 70,
     justifyContent: 'center',
     position: 'absolute',
     top: 0,
-    width: 75,
+    width: 125,
     borderRadius: 4,
-  },
-  backRightBtnLeft: {
-    backgroundColor: 'blue',
-    right: 75,
-    borderRadius: 4,
-  },
-  backRightBtnRight: {
     backgroundColor: 'red',
     right: 0,
     borderRadius: 4,

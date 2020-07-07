@@ -31,22 +31,20 @@ export default function HomeScreen(props) {
 
   const entityRef = firebase.firestore().collection('wordlist');
   const userID = props.extraData.id;
+  const userData = props.extraData;
+
   const navigation = useNavigation();
 
   /*************Fetching function ********/
 
   const fetching = () => {
-    fetch(
-      `hidden,
-      {
-        method: 'GET',
-        headers: {
-          'x-rapidapi-host': 'petapro-translate-v1.p.rapidapi.com',
-          'x-rapidapi-key':
-            '0a868878b3msha696a9ae4c53aaep18f96fjsn41fe05117014',
-        },
+    fetch(`hidden`, {
+      method: 'GET',
+      headers: {
+        'x-rapidapi-host': 'petapro-translate-v1.p.rapidapi.com',
+        'x-rapidapi-key': '0a868878b3msha696a9ae4c53aaep18f96fjsn41fe05117014',
       },
-    )
+    })
       .then((res) => res.json())
       .then((response) => {
         setLoading(false);
@@ -79,8 +77,10 @@ export default function HomeScreen(props) {
         text: entityText,
         authorID: userID,
         createdAt: timestamp,
-        //here instead of 0 i can put th index of the answer being chosen by user
-        answer: result[0].l1_text,
+
+        answer: `(${result[0].wortart.toLowerCase()}) : ${result[0].l1_text}, ${
+          result[2].l1_text
+        } `,
       };
       entityRef
         .add(entityData)
@@ -113,16 +113,12 @@ export default function HomeScreen(props) {
   const renderHiddenItem = (data, rowMap) => (
     <View style={styles.rowBack}>
       <TouchableOpacity
-        style={[styles.backRightBtn, styles.backRightBtnLeft]}
-        onPress={() => closeRow(rowMap, data.item.key)}
-      >
-        <Text style={styles.backTextWhite}>Close</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
         style={[styles.backRightBtn, styles.backRightBtnRight]}
         onPress={() => deleteRow(rowMap, data.item.key, data.item.text)}
       >
-        <Text style={styles.backTextWhite}>Delete</Text>
+        <Text style={styles.backTextWhite}>
+          Don't send me Notification for this word
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -152,13 +148,14 @@ export default function HomeScreen(props) {
             isLoading ? (
               <ActivityIndicator size="large" color="#0000ff" />
             ) : (
-              <View>
+              <View style={{ zIndex: 10 }}>
                 <SwipeListView
                   data={data}
                   keyExtractor={({ id }, index) => id.toString()}
                   removeClippedSubviews={true}
                   renderHiddenItem={renderHiddenItem}
-                  rightOpenValue={-150}
+                  rightOpenValue={-145}
+                  disableRightSwipe={true}
                   previewRowKey={'0'}
                   previewOpenValue={-40}
                   previewOpenDelay={3000}
@@ -174,6 +171,7 @@ export default function HomeScreen(props) {
                     </>
                   )}
                 />
+                <Text>Swipe left for more options</Text>
               </View>
             )
           ) : (
