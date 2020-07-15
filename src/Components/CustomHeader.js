@@ -14,59 +14,11 @@ import { useNavigation } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 export default function CustomHeader(props) {
-  const [isEnabled, setIsEnabled] = useState(false);
-  const [logText, setLogText] = useState('Login');
-  const [user, setUser] = useState(null);
-  const [username, setUsername] = useState(null);
+  const username = props.userData.fullName;
   const [showNav, setShowNav] = useState(false);
   const navigation = useNavigation();
 
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
-
-  const onListButtonPress = () => {
-    navigation.navigate('List');
-    setShowNav(false);
-  };
-  const onHomeButtonPress = () => {
-    navigation.navigate('Home');
-    setShowNav(false);
-  };
-
-  async function onPressLogout() {
-    await firebase.auth().signOut();
-    navigation.navigate('Login');
-    setShowNav(false);
-  }
   const Drawer = createDrawerNavigator();
-
-  const showMenuOnPress = () => {
-    // navigation.toggleDrawer();
-
-    setShowNav(!showNav);
-  };
-
-  /*********** This checks if user is logged in *********/
-  useEffect(() => {
-    const usersRef = firebase.firestore().collection('users');
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        usersRef
-          .doc(user.uid)
-          .get()
-          .then((document) => {
-            const userData = document.data();
-            setLogText('Logout');
-            setUser(userData);
-            setUsername(userData.fullName);
-          })
-          .catch((error) => {
-            alert('error');
-          });
-      } else {
-        setLogText('Login');
-      }
-    });
-  }, []);
 
   return (
     <>
@@ -128,46 +80,13 @@ export default function CustomHeader(props) {
             flex: 1,
             justifyContent: 'center',
             alignItems: 'flex-end',
-            marginRight: 10,
+            paddingRight: 15,
           }}
         >
           <Text>{username}</Text>
         </View>
       </SafeAreaView>
     </>
-
-    // <View style={styles.container}>
-    //   <View>
-    //     <TouchableOpacity onPress={showMenuOnPress}>
-    //       <Text style={styles.Hamburger}>{showNav ? 'X' : '☰'}</Text>
-    //     </TouchableOpacity>
-    //   </View>
-
-    //   <View style={styles.main_menu}>
-    //     {showNav ? (
-    //       <View style={styles.listContainer}>
-    //         <TouchableOpacity onPress={onHomeButtonPress}>
-    //           <Text style={styles.text}>Home</Text>
-    //         </TouchableOpacity>
-    //         <TouchableOpacity onPress={onListButtonPress}>
-    //           <Text style={styles.text}>History</Text>
-    //         </TouchableOpacity>
-    //         <TouchableOpacity onPress={onListButtonPress}>
-    //           <Text style={styles.text}>Setting</Text>
-    //         </TouchableOpacity>
-    //         <TouchableOpacity onPress={onListButtonPress}>
-    //           <Text style={styles.text}>About Popword</Text>
-    //         </TouchableOpacity>
-    //         <TouchableOpacity onPress={onListButtonPress}>
-    //           <Text style={styles.text}>Invite Friends</Text>
-    //         </TouchableOpacity>
-    //         <TouchableOpacity style={styles.logOut} onPress={onPressLogout}>
-    //           <Text style={styles.logOutText}>{logText}</Text>
-    //         </TouchableOpacity>
-    //       </View>
-    //     ) : null}
-    //   </View>
-    // </View>
   );
 }
 

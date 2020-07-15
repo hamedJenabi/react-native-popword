@@ -29,6 +29,7 @@ import {
   LoginScreen,
   RegistrationScreen,
   ListScreen,
+  LogoutScreen,
   SplashScreen,
 } from './src/screens';
 
@@ -144,6 +145,10 @@ export default function App() {
           <Drawer.Screen name="Home">
             {(props) => <TabNavigation {...props} extraData={user} />}
           </Drawer.Screen>
+          <Drawer.Screen name="Logout">
+            {(props) => <LogoutScreen {...props} extraData={user} />}
+          </Drawer.Screen>
+
           {/* <Drawer.Screen name="Login" component={LoginScreen} />
           <Drawer.Screen name="Registration" component={RegistrationScreen} /> */}
         </Drawer.Navigator>

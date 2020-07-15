@@ -13,15 +13,13 @@ export default StyleSheet.create({
   formContainer: {
     flexDirection: 'row',
     height: 80,
-    marginTop: 10,
+    marginTop: 30,
     marginBottom: 20,
     flex: 1,
     paddingTop: 10,
     paddingBottom: 30,
     paddingLeft: 30,
     paddingRight: 30,
-    // justifyContent: 'center',
-    // alignItems: 'center',
   },
   input: {
     height: 48,
@@ -31,6 +29,14 @@ export default StyleSheet.create({
     paddingLeft: 16,
     flex: 1,
     marginRight: 5,
+  },
+  optionDots: {
+    width: 25,
+    height: 22,
+  },
+  pickerContainer: {
+    backgroundColor: '#e6fffc',
+    borderRadius: 25,
   },
   button: {
     height: 47,
@@ -81,7 +87,7 @@ export default StyleSheet.create({
   },
   text: {
     fontSize: 18,
-    paddingBottom: 5,
+    paddingBottom: 15,
     alignSelf: 'center',
     color: '#333333',
   },

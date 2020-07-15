@@ -31,11 +31,11 @@ export default function RegistrationScreen({ navigation }) {
             navigation.navigate('Home', { user: data });
           })
           .catch((error) => {
-            alert(error);
+            alert('registration error', error);
           });
       })
       .catch((error) => {
-        alert(error);
+        alert('registration error', error);
       });
   };
 

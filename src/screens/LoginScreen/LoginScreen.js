@@ -36,18 +36,13 @@ export default function LoginScreen({ navigation }) {
               return;
             }
             const user = firestoreDocument.data();
-            // AsyncStorage.setItem('signedIn', true);
-
-            // {
-            //   user ? navigation.navigate('Home', { user }) : null;
-            // }
           })
           .catch((error) => {
-            alert(error);
+            alert('login error', error);
           });
       })
       .catch((error) => {
-        alert(error);
+        alert('login error', error);
       });
   };
 

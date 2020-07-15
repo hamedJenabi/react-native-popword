@@ -5,14 +5,11 @@ import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 // import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {
-  createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
-} from '@react-navigation/drawer';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Alert, Button, Platform, Image, AsyncStorage } from 'react-native';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+
+import { Image } from 'react-native';
 
 /******** expo notification Modules *********/
 import { Notifications } from 'expo';
@@ -38,7 +35,7 @@ if (!global.atob) {
 }
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialTopTabNavigator();
 import { YellowBox } from 'react-native';
 
 export default function TabNavigation(props) {
@@ -65,6 +62,8 @@ export default function TabNavigation(props) {
 
   return (
     <Tab.Navigator
+      showIcon="true"
+      tabBarPosition="bottom"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
@@ -77,7 +76,7 @@ export default function TabNavigation(props) {
             iconName = focused
               ? require('../../assets/list_focused.png')
               : require('../../assets/list.png');
-          } else if (route.name === 'Setting') {
+          } else if (route.name === 'Settings') {
             iconName = focused
               ? require('../../assets/setting_focused.png')
               : require('../../assets/setting.png');
@@ -106,7 +105,7 @@ export default function TabNavigation(props) {
           <Tab.Screen name="List">
             {(props) => <ListScreen {...props} extraData={userData} />}
           </Tab.Screen>
-          <Tab.Screen name="Setting">
+          <Tab.Screen name="Settings">
             {(props) => <ListScreen {...props} extraData={userData} />}
           </Tab.Screen>
         </>

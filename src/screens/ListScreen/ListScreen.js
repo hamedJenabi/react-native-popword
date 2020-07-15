@@ -4,6 +4,8 @@ import {
   SafeAreaView,
   Dimensions,
   Text,
+  Alert,
+  Image,
   TouchableOpacity,
   TouchableHighlight,
   View,
@@ -11,9 +13,8 @@ import {
 } from 'react-native';
 
 import { firebase } from '../../firebase/config';
-import Headers from '../../Components/Headers';
-import { SwipeListView } from 'react-native-swipe-list-view';
 import CustomHeader from '../../Components/CustomHeader';
+import { FlatList } from 'react-native-gesture-handler';
 
 // Let's sort the list too.
 // users.sort(function(a, b){
@@ -33,24 +34,6 @@ export default function ListScreen(props) {
   const entityRef = firebase.firestore().collection('wordlist');
   const userID = props.extraData.id;
   const db = firebase.firestore();
-
-  /************Swipe Functions*********/
-  // const onSwipeValueChange = (swipeData) => {
-  //   const { key, value } = swipeData;
-  //   if (value < -Dimensions.get('window').width && !setAnimationIsRunning) {
-  //     setAnimationIsRunning = true;
-  //     Animated.timing(rowTranslateAnimatedValues[key], {
-  //       toValue: 0,
-  //       duration: 200,
-  //     }).start(() => {
-  //       const newData = [...listData];
-  //       const prevIndex = listData.findIndex((item) => item.key === key);
-  //       newData.splice(prevIndex, 1);
-  //       setListData(newData);
-  //       setAnimationIsRunning = false;
-  //     });
-  //   }
-  // };
 
   const closeRow = (rowMap, rowKey) => {
     if (rowMap[rowKey]) {
@@ -82,7 +65,7 @@ export default function ListScreen(props) {
       })
 
       .then(function () {
-        // alert('Document successfully deleted!');
+        // alert('successfully deleted!');
       })
       .catch(function (error) {
         alert('Error removing document: ');
@@ -110,7 +93,7 @@ export default function ListScreen(props) {
           setWordList(newEntities);
         },
         (error) => {
-          console.log(error);
+          console.log('here in list', error);
         },
       );
   }, []);
@@ -119,44 +102,68 @@ export default function ListScreen(props) {
       <Animated.View style={styles.listContainer}>
         <TouchableHighlight underlayColor={'#AAA'}>
           <Text style={styles.text}>
-            {item.text} {item.answer}
+            {item.text}: {item.answer}
           </Text>
         </TouchableHighlight>
+        <TouchableOpacity
+          style={styles.optionDots}
+          onPress={() =>
+            Alert.alert(
+              'Delete',
+              'Do you want to delete this word from your history?',
+              [
+                {
+                  text: 'No',
+                  style: 'cancel',
+                },
+                {
+                  text: 'Yes',
+                  onPress: () =>
+                    deleteRow(rowMap, data.item.key, data.item.text),
+                },
+              ],
+            )
+          }
+        >
+          <Image
+            style={styles.optionDots}
+            source={require('../../../assets/dots.png')}
+          ></Image>
+        </TouchableOpacity>
       </Animated.View>
     );
   };
 
-  const renderHiddenItem = (data, rowMap) => (
-    <View style={styles.rowBack}>
-      <Text>Left</Text>
-      <TouchableOpacity
-        style={[styles.backRightBtn, styles.backRightBtnRight]}
-        onPress={() => deleteRow(rowMap, data.item.key, data.item.text)}
-      >
-        <Text style={styles.backTextWhite}>Delete</Text>
-      </TouchableOpacity>
-    </View>
-  );
+  // const renderHiddenItem = (data, rowMap) => (
+  //   <View style={styles.rowBack}>
+  //     <Text>Left</Text>
+  //     <TouchableOpacity
+  //       style={[styles.backRightBtn, styles.backRightBtnRight]}
+  //       onPress={() => deleteRow(rowMap, data.item.key, data.item.text)}
+  //     >
+  //       <Text style={styles.backTextWhite}>Delete</Text>
+  //     </TouchableOpacity>
+  //   </View>
+  // );
 
   return (
     <SafeAreaView style={styles.body}>
-      <CustomHeader title="History" />
+      <CustomHeader title="History" userData={props.extraData} />
       <View style={styles.container}>
-        <Text style={styles.title}>Swipe left for more options</Text>
-
         {wordList && (
           <View>
-            <SwipeListView
+            <FlatList
               data={wordList}
               renderItem={renderItem}
-              renderHiddenItem={renderHiddenItem}
-              leftOpenValue={75}
-              rightOpenValue={-75}
-              disableRightSwipe={true}
-              previewRowKey={'0'}
-              previewOpenValue={-40}
-              previewOpenDelay={3000}
-              onRowDidOpen={onRowDidOpen}
+              // renderHiddenItem={renderHiddenItem}
+
+              // leftOpenValue={75}
+              // rightOpenValue={-75}
+              // disableRightSwipe={true}
+              // previewRowKey={'0'}
+              // previewOpenValue={-40}
+              // previewOpenDelay={3000}
+              // onRowDidOpen={onRowDidOpen}
             />
           </View>
         )}
@@ -176,6 +183,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.1,
   },
   listContainer: {
+    flexDirection: 'row',
     alignSelf: 'center',
     width: '90%',
     borderRadius: 4,
@@ -192,7 +200,13 @@ const styles = StyleSheet.create({
     shadowRadius: 1.01,
     elevation: 1,
     backgroundColor: '#ccfff9',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+  },
+
+  optionDots: {
+    width: 25,
+    height: 22,
+    marginTop: 1,
   },
   rowBack: {
     borderRadius: 4,

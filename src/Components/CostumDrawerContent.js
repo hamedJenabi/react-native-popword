@@ -14,35 +14,36 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { firebase } from '../firebase/config';
 /************* CostumDrawerContent *********/
 export default function CostumDrawerContent(props) {
-  const pressLogOut = async () => {
-    await firebase
-      .auth()
-      .signOut()
-      .then(
-        function () {
-          // alert('Signed Out');
-          Alert.alert(
-            'Sign out',
-            'Sure about this?',
-            [
-              {
-                text: 'No',
-                style: 'cancel',
-              },
-              {
-                //I will figure out to log out in drawer component
-                // If not, I put a logout logo on Header and let's see
-                text: 'Yes',
-                onPress: () => BackHandler.exitApp(),
-              },
-            ],
-            { cancelable: false },
-          );
-        },
-        function (error) {
-          console.error('Sign Out Error', error);
-        },
-      );
+  const pressLogOut = () => {
+    props.navigation.navigate('Logout');
+    // await firebase
+    //   .auth()
+    //   .signOut()
+    //   .then(
+    //     function () {
+    //       // alert('Signed Out');
+    //       Alert.alert(
+    //         'Sign out',
+    //         'Sure about this?',
+    //         [
+    //           {
+    //             text: 'No',
+    //             style: 'cancel',
+    //           },
+    //           {
+    //             //I will figure out to log out in drawer component
+    //             // If not, I put a logout logo on Header and let's see
+    //             text: 'Yes',
+    //             onPress: () => BackHandler.exitApp(),
+    //           },
+    //         ],
+    //         { cancelable: false },
+    //       );
+    //     },
+    //     function (error) {
+    //       console.error('Sign Out Error', error);
+    //     },
+    //   );
     return;
   };
   return (
@@ -97,7 +98,7 @@ export default function CostumDrawerContent(props) {
           marginBottom: 70,
         }}
       >
-        <Text style={{ fontSize: 20, alignSelf: 'center' }}>Setting</Text>
+        <Text style={{ fontSize: 20, alignSelf: 'center' }}>Settings</Text>
       </TouchableOpacity>
       <View style={{ flex: 1, justifyContent: 'flex-end', marginBottom: 36 }}>
         <TouchableOpacity
