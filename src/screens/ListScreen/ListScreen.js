@@ -9,8 +9,8 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   View,
-  StyleSheet,
 } from 'react-native';
+import styles from '../../../theme';
 
 import { firebase } from '../../firebase/config';
 import CustomHeader from '../../Components/CustomHeader';
@@ -100,11 +100,6 @@ export default function ListScreen(props) {
   const renderItem = ({ item, index }) => {
     return (
       <Animated.View style={styles.listContainer}>
-        <TouchableHighlight underlayColor={'#AAA'}>
-          <Text style={styles.text}>
-            {item.text}: {item.answer}
-          </Text>
-        </TouchableHighlight>
         <TouchableOpacity
           style={styles.optionDots}
           onPress={() =>
@@ -118,8 +113,7 @@ export default function ListScreen(props) {
                 },
                 {
                   text: 'Yes',
-                  onPress: () =>
-                    deleteRow(rowMap, data.item.key, data.item.text),
+                  onPress: () => deleteRow(index, item.key, item.text),
                 },
               ],
             )
@@ -130,6 +124,13 @@ export default function ListScreen(props) {
             source={require('../../../assets/dots.png')}
           ></Image>
         </TouchableOpacity>
+        <TouchableHighlight underlayColor={'#AAA'}>
+          <View>
+            <Text style={styles.text}>
+              {item.text}: {item.answer}
+            </Text>
+          </View>
+        </TouchableHighlight>
       </Animated.View>
     );
   };
@@ -172,91 +173,58 @@ export default function ListScreen(props) {
   );
 }
 
-const styles = StyleSheet.create({
-  body: {
-    flex: 1,
-    marginTop: 50,
-  },
-  container: {
-    flex: 1,
-    marginTop: 50,
-    borderWidth: 0.1,
-  },
-  listContainer: {
-    flexDirection: 'row',
-    alignSelf: 'center',
-    width: '90%',
-    borderRadius: 4,
-    borderWidth: 0.1,
-    borderColor: '#d6d7da',
-    padding: 16,
-    marginBottom: 10,
-    shadowColor: '#ff33b5e5',
-    shadowOffset: {
-      width: 1,
-      height: 0,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 1.01,
-    elevation: 1,
-    backgroundColor: '#ccfff9',
-    justifyContent: 'space-between',
-  },
+// const styles = StyleSheet.create({
+//   body: {
+//     flex: 1,
+//     marginTop: 50,
+//   },
+//   container: {
+//     flex: 1,
+//     marginTop: 50,
+//     borderWidth: 0.1,
+//   },
+//   listContainer: {
+//     justifyContent: 'space-between',
+//     alignSelf: 'center',
+//     width: '95%',
+//     borderRadius: 4,
+//     borderWidth: 0.1,
+//     borderColor: '#d6d7da',
+//     padding: 10,
+//     marginBottom: 10,
+//     shadowColor: '#ff33b5e5',
+//     shadowOffset: {
+//       width: 1,
+//       height: 0,
+//     },
+//     shadowOpacity: 0.1,
+//     shadowRadius: 1.01,
+//     elevation: 1,
+//     backgroundColor: '#ccfff9',
+//   },
 
-  optionDots: {
-    width: 25,
-    height: 22,
-    marginTop: 1,
-  },
-  rowBack: {
-    borderRadius: 4,
-    width: '90%',
-    alignSelf: 'center',
-    padding: 15,
-    marginBottom: 10,
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  text: {
-    alignSelf: 'center',
-    fontSize: 20,
-  },
-  entityText: {
-    fontSize: 20,
+//   optionDots: {
+//     width: 25,
+//     height: 22,
+//     marginTop: 1,
+//     alignSelf: 'flex-end',
+//   },
 
-    color: '#333333',
-  },
-  title: {
-    alignSelf: 'center',
-    fontSize: 20,
-    paddingTop: 10,
-    marginBottom: 30,
-  },
-  scrollView: {
-    marginHorizontal: 20,
-  },
-  backTextWhite: {
-    alignSelf: 'center',
-    color: '#FFF',
-  },
-
-  backRightBtn: {
-    bottom: 0,
-    justifyContent: 'center',
-    position: 'absolute',
-    top: 0,
-    width: 75,
-    borderRadius: 4,
-  },
-  backRightBtnLeft: {
-    backgroundColor: 'blue',
-    right: 75,
-    borderRadius: 4,
-  },
-  backRightBtnRight: {
-    backgroundColor: 'red',
-    right: 0,
-    borderRadius: 4,
-  },
-});
+//   text: {
+//     fontSize: 16,
+//     color: '#333333',
+//   },
+//   entityText: {
+//     fontSize: 18,
+//     color: '#333333',
+//   },
+//   title: {
+//     alignSelf: 'center',
+//     fontSize: 20,
+//     paddingTop: 10,
+//     marginBottom: 30,
+//   },
+//   scrollView: {
+//     marginHorizontal: 20,
+//   },
+// });

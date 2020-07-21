@@ -140,7 +140,7 @@ export default function App() {
             width: 300,
           }}
           initialRouteName="Home"
-          drawerContent={(props) => CostumDrawerContent(props)}
+          drawerContent={(props) => CostumDrawerContent({ props, user })}
         >
           <Drawer.Screen name="Home">
             {(props) => <TabNavigation {...props} extraData={user} />}

@@ -1,6 +1,6 @@
 import * as Notifications from 'expo-notifications';
 
-const pushNotification = (text, res) => {
+const pushNotification = (text, result) => {
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
       shouldShowAlert: true,
@@ -8,20 +8,22 @@ const pushNotification = (text, res) => {
       shouldSetBadge: false,
     }),
   });
+  const answer = [...result];
+
   const identifier = Notifications.scheduleNotificationAsync({
     content: {
       title: 'POP WORD',
-      body: `${text}: ${answer[0].result}, ${answer[1].result}, ${answer[0].detail}`,
+      body: `${text}: ${answer[0].result}, ${answer[0].detail}`,
     },
     trigger: {
       //5 seconds  from now (Test)
-      seconds: 5,
+      seconds: 15,
     },
   });
-  Notifications.scheduleNotificationAsync({
+  const notificationName = Notifications.scheduleNotificationAsync({
     content: {
       title: 'POP WORD',
-      body: `${text} ${res[0].wortart.toLowerCase()} : ${res[0].l1_text}`,
+      body: `${text}: ${answer[0].result}, ${answer[0].detail}`,
       color: 'red',
     },
     trigger: {
@@ -29,11 +31,11 @@ const pushNotification = (text, res) => {
       seconds: 3 * 86400,
     },
   });
-
+  console.log('notificationName', notificationName);
   Notifications.scheduleNotificationAsync({
     content: {
       title: 'POP WORD',
-      body: `${text} ${res[0].wortart.toLowerCase()} : ${res[0].l1_text} `,
+      body: `${text}: ${answer[0].result}, ${answer[0].detail}`,
       color: 'red',
     },
     trigger: {
@@ -44,7 +46,7 @@ const pushNotification = (text, res) => {
   Notifications.scheduleNotificationAsync({
     content: {
       title: 'POP WORD',
-      body: `${text} ${res[0].wortart.toLowerCase()} : ${res[0].l1_text} `,
+      body: `${text}: ${answer[0].result}, ${answer[0].detail}`,
       color: 'red',
     },
     trigger: {
@@ -52,6 +54,7 @@ const pushNotification = (text, res) => {
       seconds: 30 * 86400,
     },
   });
+  return notificationName;
 };
 export default pushNotification;
 // import PushNotification from 'react-native-push-notification';

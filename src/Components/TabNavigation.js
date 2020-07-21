@@ -24,6 +24,7 @@ import {
   LoginScreen,
   RegistrationScreen,
   ListScreen,
+  SettingScreen,
 } from '../../src/screens';
 
 import { decode, encode } from 'base-64';
@@ -106,7 +107,7 @@ export default function TabNavigation(props) {
             {(props) => <ListScreen {...props} extraData={userData} />}
           </Tab.Screen>
           <Tab.Screen name="Settings">
-            {(props) => <ListScreen {...props} extraData={userData} />}
+            {(props) => <SettingScreen {...props} extraData={userData} />}
           </Tab.Screen>
         </>
       ) : (

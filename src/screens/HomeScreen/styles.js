@@ -1,5 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { AsyncStorage, StyleSheet } from 'react-native';
 
+const darkmode = AsyncStorage.getItem('darkmode');
 export default StyleSheet.create({
   container: {
     flex: 1,
@@ -9,6 +10,7 @@ export default StyleSheet.create({
   body: {
     flex: 1,
     marginTop: 50,
+    // backgroundColor: darkmode ? 'black' : 'transparent',
   },
   formContainer: {
     flexDirection: 'row',
@@ -33,6 +35,7 @@ export default StyleSheet.create({
   optionDots: {
     width: 25,
     height: 22,
+    alignSelf: 'flex-end',
   },
   pickerContainer: {
     backgroundColor: '#e6fffc',
@@ -64,12 +67,13 @@ export default StyleSheet.create({
     marginTop: 20,
   },
   entityContainer: {
+    minWidth: '90%',
+    justifyContent: 'space-between',
     backgroundColor: '#e6fffc',
-
     borderRadius: 4,
     borderWidth: 0.1,
     borderColor: '#1affe4',
-    padding: 16,
+    padding: 14,
     marginBottom: 10,
     shadowColor: 'blue',
     shadowOffset: {
@@ -82,7 +86,7 @@ export default StyleSheet.create({
     elevation: 1,
   },
   entityText: {
-    fontSize: 20,
+    fontSize: 18,
     color: '#333333',
   },
   text: {

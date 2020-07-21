@@ -12,39 +12,13 @@ import {
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
 import { firebase } from '../firebase/config';
+import styles from '../../theme';
 /************* CostumDrawerContent *********/
-export default function CostumDrawerContent(props) {
+export default function CostumDrawerContent({ props, user }) {
+  const username = user.fullName;
+
   const pressLogOut = () => {
     props.navigation.navigate('Logout');
-    // await firebase
-    //   .auth()
-    //   .signOut()
-    //   .then(
-    //     function () {
-    //       // alert('Signed Out');
-    //       Alert.alert(
-    //         'Sign out',
-    //         'Sure about this?',
-    //         [
-    //           {
-    //             text: 'No',
-    //             style: 'cancel',
-    //           },
-    //           {
-    //             //I will figure out to log out in drawer component
-    //             // If not, I put a logout logo on Header and let's see
-    //             text: 'Yes',
-    //             onPress: () => BackHandler.exitApp(),
-    //           },
-    //         ],
-    //         { cancelable: false },
-    //       );
-    //     },
-    //     function (error) {
-    //       console.error('Sign Out Error', error);
-    //     },
-    //   );
-    return;
   };
   return (
     <SafeAreaView
@@ -54,20 +28,24 @@ export default function CostumDrawerContent(props) {
     >
       <View
         style={{
-          justifyContent: 'center',
+          // justifyContent: 'center',
           height: 37,
           width: '100%',
-          alignItems: 'center',
+          // alignItems: 'center',
           marginBottom: 30,
-          marginTop: 100,
-          borderBottomColor: '#d6d7da',
-          padding: 56,
+          marginTop: 40,
+          padding: 40,
+          borderBottomWidth: 0.5,
+          borderBottomColor: 'grey',
         }}
       >
         <Image
-          style={{ alignSelf: 'center' }}
-          source={require('../../assets/popcorn.png')}
+          // style={{ alignSelf: 'center' }}
+          source={require('../../assets/Profile.png')}
         />
+        <View>
+          <Text style={styles.userName}>{username}</Text>
+        </View>
       </View>
       <TouchableOpacity
         onPress={() => props.navigation.navigate('Home')}
@@ -91,7 +69,7 @@ export default function CostumDrawerContent(props) {
         <Text style={{ fontSize: 20 }}>History</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => props.navigation.navigate('List')}
+        onPress={() => props.navigation.navigate('Settings')}
         style={{
           justifyContent: 'center',
           alignSelf: 'center',

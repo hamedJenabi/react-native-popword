@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import {
-  AsyncStorage,
+  Image,
+  Alert,
   SafeAreaView,
   Platform,
   Keyboard,
@@ -10,11 +11,10 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  Picker,
   ActivityIndicator,
 } from 'react-native';
 
-import styles from './styles';
+import styles from '../../../theme';
 import { firebase } from '../../firebase/config';
 import Constants from 'expo-constants';
 import { FlatList } from 'react-native-gesture-handler';
@@ -32,54 +32,47 @@ export default function HomeScreen(props) {
   const [isLoading, setLoading] = useState(true);
   const [show, setShow] = useState(false);
   const [data, setData] = useState([]);
-  const [selectedDict, setSelectedDict] = useState('');
-
-  const [expoToken, setExpoToken] = useState('');
-
+  const [selectedDict, setSelectedDict] = useState('de-en');
+  const [notificationName, setNotifcationName] = useState('');
   const entityRef = firebase.firestore().collection('wordlist');
   const userID = props.extraData.id;
   const userData = props.extraData;
 
   const navigation = useNavigation();
 
+  /******Cancel notification *****/
+
+  const cancelNotification = async (notificationName) => {
+    await Notifications.cancelScheduledNotificationAsync(notificationName);
+  };
+
   /*************Fetching function ********/
 
-  const fetching = () => {
-    fetch(`http://10.0.2.2:3000/api/popword/${selectedDict}/${entityText}`, {
-      method: 'GET',
-    })
+  const fetching = async () => {
+    fetch(
+      `https://popwordapi.herokuapp.com/api/popword/${selectedDict}/${entityText}`,
+      {
+        method: 'GET',
+      },
+    )
       .then((response) => response.json())
       .then((response) => {
-        const result = response.slice(0, 3);
-
+        const result = response.slice(0, 2);
         setData(result);
-        setShow(true);
-
         setLoading(false);
 
         if (result) {
+          setShow(true);
           addToDataBase(result);
-          pushNotification(entityText, result);
+          const notification = pushNotification(entityText, result);
+          setNotifcationName(notification);
         }
-        // setShow(true);
       });
-
-    // .catch((error) => {
-    //   alert('Error', 'Word not found', [
-    //     {
-    //       text: 'ok',
-    //       onPress: () => {
-    //         setLoading(false);
-    //       },
-    //     },
-    //   ]);
-    // });
   };
 
   /******** INSERT INTO DATABASE *********/
 
   const addToDataBase = (answer) => {
-    console.log('answer in function', answer);
     if (entityText && entityText.length > 0) {
       const timestamp = firebase.firestore.FieldValue.serverTimestamp();
       const entityData = {
@@ -154,6 +147,7 @@ export default function HomeScreen(props) {
             ]}
             defaultValue="de-en"
             containerStyle={{
+              marginTop: 20,
               height: 40,
               width: 255,
             }}
@@ -191,21 +185,7 @@ export default function HomeScreen(props) {
             activeLabelStyle={{ color: '#008071' }}
           />
         </View>
-        {/* <Picker
-          selectedLanguage={selectedLanguage}
-          style={{ height: 50, width: 150 }}
-          onValueChange={(itemValue, itemIndex) =>
-            setSelectedLanguage(itemValue)
-          }
-        >
-          <Picker.Item label="German  -> English" value="de-en" />
-          <Picker.Item label="English -> German" value="en-de" />
-        </Picker> */}
 
-        {/* <Picker.Item label="German  -> Spanish" value="de-es" />
-          <Picker.Item label="Spanish -> German" value="es-de" />
-          <Picker.Item label="German  -> Italian" value="de-it" />
-          <Picker.Item label="Italian -> German" value="it-de" /> */}
         <View style={styles.formContainer}>
           <TextInput
             style={styles.input}
@@ -216,7 +196,10 @@ export default function HomeScreen(props) {
             underlineColorAndroid="transparent"
             autoCapitalize="none"
           />
-          <TouchableOpacity style={styles.button} onPress={onSearchButtonPress}>
+          <TouchableOpacity
+            style={styles.searchButton}
+            onPress={onSearchButtonPress}
+          >
             <Text style={styles.buttonText}>Search</Text>
           </TouchableOpacity>
         </View>
@@ -228,7 +211,7 @@ export default function HomeScreen(props) {
               <View style={{ zIndex: 10 }}>
                 <FlatList
                   data={data}
-                  // keyExtractor={({ id }, index) => id.toString()}
+                  keyExtractor={({ id }, index) => id.toString()}
                   // removeClippedSubviews={true}
                   // renderHiddenItem={renderHiddenItem}
                   // rightOpenValue={-145}
@@ -238,13 +221,7 @@ export default function HomeScreen(props) {
                   // previewOpenDelay={3000}
                   renderItem={({ item }) => (
                     <>
-                      <View style={styles.entityContainer}>
-                        <View>
-                          <Text style={styles.entityText}>
-                            {item.word}: {item.result}
-                          </Text>
-                          <Text>{item.detail}</Text>
-                        </View>
+                      <View style={styles.listContainer}>
                         <TouchableOpacity
                           style={styles.optionDots}
                           onPress={() =>
@@ -258,7 +235,9 @@ export default function HomeScreen(props) {
                                 },
                                 {
                                   text: 'Yes',
-                                  onPress: () => alert('canceled'),
+                                  onPress: async () => {
+                                    await cancelNotification(notificationName);
+                                  },
                                 },
                               ],
                             )
@@ -269,6 +248,12 @@ export default function HomeScreen(props) {
                             source={require('../../../assets/dots.png')}
                           ></Image>
                         </TouchableOpacity>
+                        <View>
+                          <Text style={styles.entityText}>
+                            {item.word}: {item.result}
+                          </Text>
+                          <Text>{item.detail}</Text>
+                        </View>
                       </View>
                     </>
                   )}
