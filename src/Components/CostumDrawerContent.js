@@ -28,13 +28,13 @@ export default function CostumDrawerContent({ props, user }) {
     >
       <View
         style={{
-          // justifyContent: 'center',
+          justifyContent: 'center',
           height: 37,
           width: '100%',
-          // alignItems: 'center',
+          alignItems: 'center',
           marginBottom: 30,
           marginTop: 40,
-          padding: 40,
+          padding: 100,
           borderBottomWidth: 0.5,
           borderBottomColor: 'grey',
         }}
@@ -43,7 +43,7 @@ export default function CostumDrawerContent({ props, user }) {
           // style={{ alignSelf: 'center' }}
           source={require('../../assets/Profile.png')}
         />
-        <View>
+        <View style={{ minWidth: 50 }}>
           <Text style={styles.userName}>{username}</Text>
         </View>
       </View>
@@ -69,14 +69,32 @@ export default function CostumDrawerContent({ props, user }) {
         <Text style={{ fontSize: 20 }}>History</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => props.navigation.navigate('Settings')}
+        onPress={() => props.navigation.navigate('About')}
         style={{
           justifyContent: 'center',
           alignSelf: 'center',
-          marginBottom: 70,
+          marginBottom: 30,
         }}
       >
-        <Text style={{ fontSize: 20, alignSelf: 'center' }}>Settings</Text>
+        <Text style={{ fontSize: 20, alignSelf: 'center' }}>About</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => props.navigation.navigate('About')}
+        style={{
+          flexDirection: 'row',
+
+          justifyContent: 'center',
+          alignSelf: 'center',
+          marginBottom: 30,
+        }}
+      >
+        <Image
+          style={{ width: 25, height: 25, marginRight: 5 }}
+          source={require('../../assets/invitation.png')}
+        />
+        <Text style={{ fontSize: 20, alignSelf: 'center', marginRight: 10 }}>
+          Invite friends
+        </Text>
       </TouchableOpacity>
       <View style={{ flex: 1, justifyContent: 'flex-end', marginBottom: 36 }}>
         <TouchableOpacity

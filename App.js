@@ -148,9 +148,6 @@ export default function App() {
           <Drawer.Screen name="Logout">
             {(props) => <LogoutScreen {...props} extraData={user} />}
           </Drawer.Screen>
-
-          {/* <Drawer.Screen name="Login" component={LoginScreen} />
-          <Drawer.Screen name="Registration" component={RegistrationScreen} /> */}
         </Drawer.Navigator>
       ) : (
         <Stack.Navigator initialRouteName="Login">
@@ -158,60 +155,6 @@ export default function App() {
           <Stack.Screen name="Registration" component={RegistrationScreen} />
         </Stack.Navigator>
       )}
-
-      {/* <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-
-            if (route.name === 'Home') {
-              iconName = focused
-                ? require('./assets/home_focused.png')
-                : require('./assets/home.png');
-            } else if (route.name === 'List') {
-              iconName = focused
-                ? require('./assets/list_focused.png')
-                : require('./assets/list.png');
-            } else if (route.name === 'Setting') {
-              iconName = focused
-                ? require('./assets/setting_focused.png')
-                : require('./assets/setting.png');
-            }
-
-            // You can return any component that you like here!
-            return (
-              <Image
-                source={iconName}
-                style={{ width: 20, height: 20 }}
-                resizeMode="contain"
-              />
-            );
-          },
-        })}
-        tabBarOptions={{
-          activeTintColor: 'tomato',
-          inactiveTintColor: 'gray',
-        }}
-      >
-        {user ? (
-          <>
-            <Tab.Screen name="Home">
-              {(props) => <HomeScreen {...props} extraData={user} />}
-            </Tab.Screen>
-            <Tab.Screen name="List">
-              {(props) => <ListScreen {...props} extraData={user} />}
-            </Tab.Screen>
-            <Tab.Screen name="Setting">
-              {(props) => <ListScreen {...props} extraData={user} />}
-            </Tab.Screen>
-          </>
-        ) : (
-          <>
-            <Tab.Screen name="Login" component={LoginScreen} />
-            <Tab.Screen name="Registration" component={RegistrationScreen} />
-          </>
-        )}
-      </Tab.Navigator> */}
     </NavigationContainer>
   );
 }

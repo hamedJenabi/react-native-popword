@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   View,
   ActivityIndicator,
+  AsyncStorage,
 } from 'react-native';
 
 import styles from '../../../theme';
@@ -107,26 +108,16 @@ export default function HomeScreen(props) {
       </Animated.View>
     );
   };
-  /******** hidden Items ******/
-  // const renderHiddenItem = (data, rowMap) => (
-  //   <View style={styles.rowBack}>
-  //     <TouchableOpacity
-  //       style={[styles.backRightBtn, styles.backRightBtnRight]}
-  //       onPress={() => deleteRow(rowMap, data.item.key, data.item.text)}
-  //     >
-  //       <Text style={styles.backTextWhite}>
-  //         Don't send me Notification for this word
-  //       </Text>
-  //     </TouchableOpacity>
-  //   </View>
-  // );
+
+  /**** DaRK MODE *****/
+
   /******** return *********/
 
   return (
     <SafeAreaView style={styles.body}>
       <CustomHeader title="Home" userData={userData} />
       <View style={styles.container}>
-        <Text style={styles.text}>What word do you want to look up?</Text>
+        <Text style={styles.text}>Choose your dictionary</Text>
         <View
           style={{
             ...(Platform.OS !== 'android' && {
@@ -143,6 +134,10 @@ export default function HomeScreen(props) {
               {
                 label: 'English  -->  German',
                 value: 'en-de',
+              },
+              {
+                label: 'Spanish  -->  English',
+                value: 'es-en',
               },
             ]}
             defaultValue="de-en"
