@@ -45,9 +45,9 @@ export default function AboutScreen(props) {
         <Text style={styles.text}>My name is Hamed.</Text>
         <View style={styles.textContainer}>
           <Text style={{ textAlign: 'center', letterSpacing: 1 }}>
-            I am a Full-Stack Developer who always wants to develope new ideas.
-            This App was an idea I had for a long time, never got the change to
-            do it, but thanks to my BootCamp at UpLeveled, I made it happen.
+            I am a Full-Stack Developer. This App was an idea I had for a long
+            time, never got the change to do it, but thanks to my BootCamp at
+            UpLeveled, I made it happen.
           </Text>
         </View>
         <View style={{ flexDirection: 'row' }}>

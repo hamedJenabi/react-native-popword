@@ -1,7 +1,6 @@
-import { StyleSheet, AsyncStorage } from 'react-native';
-import react, { useEffect, useState } from 'react';
+import { StyleSheet } from 'react-native';
 
-const styles = (darkmode) =>
+const styles = () =>
   StyleSheet.create({
     body: {
       flex: 1,

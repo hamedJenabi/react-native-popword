@@ -1,16 +1,15 @@
 {
   "expo": {
-    "name": "react-native-popword",
+    "name": "popword",
     "slug": "react-native-popword",
     "version": "1.0.0",
     "orientation": "portrait",
     "description": "The Ultimate Dictionary ",
-    "icon": "./assets/popcorn.png",
+    "icon": "./assets/dictionary.png",
     "splash": {
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -19,11 +18,11 @@
       "supportsTablet": true
     },
     "android": {
-      "googleServicesFile": "./google-services.json",
-      "useNextNotificationsApi": true
+      "package": "com.nativeApper.popword",
+      "permissions": "[]"
     },
     "web": {
-      "favicon": "./assets/popcorn.png"
+      "favicon": "./assets/dictionary.png"
     }
   }
 }
