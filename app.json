@@ -19,7 +19,7 @@
     },
     "android": {
       "package": "com.nativeApper.popword",
-      "permissions": "[]"
+      "permissions": []
     },
     "web": {
       "favicon": "./assets/dictionary.png"

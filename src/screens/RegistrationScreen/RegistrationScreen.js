@@ -27,9 +27,7 @@ export default function RegistrationScreen({ navigation }) {
         usersRef
           .doc(uid)
           .set(data)
-          .then(() => {
-            navigation.navigate('Home', { user: data });
-          })
+          .then(() => {})
           .catch((error) => {
             alert('registration error', error);
           });

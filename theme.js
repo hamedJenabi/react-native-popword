@@ -82,6 +82,7 @@ const styles = () =>
       fontSize: 26,
       color: '#333333',
       marginTop: 10,
+      textAlign: 'center',
     },
     textContainer: {
       justifyContent: 'center',
