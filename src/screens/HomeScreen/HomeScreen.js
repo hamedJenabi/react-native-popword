@@ -143,6 +143,10 @@ export default function HomeScreen(props) {
                 label: 'Spanish  -->  English',
                 value: 'es-en',
               },
+              {
+                label: 'italian  -->  English',
+                value: 'it-en',
+              },
             ]}
             defaultValue="de-en"
             containerStyle={{

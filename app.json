@@ -2,7 +2,7 @@
   "expo": {
     "name": "popword",
     "slug": "react-native-popword",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "orientation": "portrait",
     "description": "The Ultimate Dictionary ",
     "icon": "./assets/dictionary.png",
