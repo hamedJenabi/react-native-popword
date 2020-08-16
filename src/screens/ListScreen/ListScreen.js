@@ -6,6 +6,7 @@ import {
   Text,
   Alert,
   Image,
+  Button,
   TouchableOpacity,
   TouchableHighlight,
   View,
@@ -71,9 +72,33 @@ export default function ListScreen(props) {
         alert('Error removing document: ');
       });
   };
+  const deleteAll = () => {
+    //First the state variable will be updated here
+
+    //Here I get the item I want to remove from DB with WHERE
+    //,then using foreach to get
+    //all words that has the same text
+
+    const removedItems = db
+      .collection('wordlist')
+      .where('authorID', '==', userID)
+      .get()
+      .then(function (removedItem) {
+        removedItem.forEach(function (doc) {
+          doc.ref.delete();
+        });
+      })
+
+      .then(function () {
+        // alert('successfully deleted!');
+      })
+      .catch(function (error) {
+        alert('Error removing document: ');
+      });
+  };
 
   const onRowDidOpen = (rowKey) => {
-    console.log('This row opened', rowKey);
+    // console.log('This row opened', rowKey);
   };
 
   /******** READ from firebase *******/
@@ -150,81 +175,19 @@ export default function ListScreen(props) {
   return (
     <SafeAreaView style={styles.body}>
       <CustomHeader title="History" userData={props.extraData} />
+
       <View style={styles.container}>
         {wordList && (
-          <View>
-            <FlatList
-              data={wordList}
-              renderItem={renderItem}
-              // renderHiddenItem={renderHiddenItem}
-
-              // leftOpenValue={75}
-              // rightOpenValue={-75}
-              // disableRightSwipe={true}
-              // previewRowKey={'0'}
-              // previewOpenValue={-40}
-              // previewOpenDelay={3000}
-              // onRowDidOpen={onRowDidOpen}
-            />
-          </View>
+          <>
+            <TouchableOpacity onPress={deleteAll} style={styles.buttonDelete}>
+              <Text style={styles.buttonTitle}>Delete ALL</Text>
+            </TouchableOpacity>
+            <View>
+              <FlatList data={wordList} renderItem={renderItem} />
+            </View>
+          </>
         )}
       </View>
     </SafeAreaView>
   );
 }
-
-// const styles = StyleSheet.create({
-//   body: {
-//     flex: 1,
-//     marginTop: 50,
-//   },
-//   container: {
-//     flex: 1,
-//     marginTop: 50,
-//     borderWidth: 0.1,
-//   },
-//   listContainer: {
-//     justifyContent: 'space-between',
-//     alignSelf: 'center',
-//     width: '95%',
-//     borderRadius: 4,
-//     borderWidth: 0.1,
-//     borderColor: '#d6d7da',
-//     padding: 10,
-//     marginBottom: 10,
-//     shadowColor: '#ff33b5e5',
-//     shadowOffset: {
-//       width: 1,
-//       height: 0,
-//     },
-//     shadowOpacity: 0.1,
-//     shadowRadius: 1.01,
-//     elevation: 1,
-//     backgroundColor: '#ccfff9',
-//   },
-
-//   optionDots: {
-//     width: 25,
-//     height: 22,
-//     marginTop: 1,
-//     alignSelf: 'flex-end',
-//   },
-
-//   text: {
-//     fontSize: 16,
-//     color: '#333333',
-//   },
-//   entityText: {
-//     fontSize: 18,
-//     color: '#333333',
-//   },
-//   title: {
-//     alignSelf: 'center',
-//     fontSize: 20,
-//     paddingTop: 10,
-//     marginBottom: 30,
-//   },
-//   scrollView: {
-//     marginHorizontal: 20,
-//   },
-// });

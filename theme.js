@@ -16,7 +16,14 @@ const styles = () =>
       alignItems: 'center',
       marginTop: 20,
     },
-    title: {},
+    title: {
+      fontSize: 28,
+      color: '#333333',
+      margin: 0,
+      letterSpacing: 1,
+      maxWidth: 350,
+      textAlign: 'center',
+    },
     logo: {
       flex: 1,
       height: 120,
@@ -52,10 +59,22 @@ const styles = () =>
       alignItems: 'center',
       justifyContent: 'center',
     },
+    buttonDelete: {
+      backgroundColor: 'red',
+      marginLeft: 30,
+      marginRight: 30,
+      marginTop: 20,
+      height: 48,
+      minWidth: 100,
+      borderRadius: 5,
+      alignSelf: 'flex-end',
+      justifyContent: 'center',
+    },
     buttonTitle: {
       color: 'white',
       fontSize: 16,
       fontWeight: 'bold',
+      textAlign: 'center',
     },
     footerView: {
       flex: 1,

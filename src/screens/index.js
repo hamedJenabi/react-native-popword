@@ -7,3 +7,4 @@ export { default as RegistrationScreen } from './RegistrationScreen/Registration
 export { default as ListScreen } from './ListScreen/ListScreen';
 export { default as AboutScreen } from './AboutScreen/AboutScreen';
 export { default as SplashScreen } from './SplashScreen/SplashScreen';
+export { default as ShareScreen } from './ShareScreen/ShareScreen';

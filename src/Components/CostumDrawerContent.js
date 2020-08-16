@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Alert,
-  Text,
-  Image,
-  SafeAreaView,
-  BackHandler,
-  NativeModules,
-  AsyncStorage,
-} from 'react-native';
+import { View, Text, Image, SafeAreaView } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
 import { firebase } from '../firebase/config';
@@ -79,7 +70,7 @@ export default function CostumDrawerContent({ props, user }) {
         <Text style={{ fontSize: 20, alignSelf: 'center' }}>About</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => props.navigation.navigate('About')}
+        onPress={() => props.navigation.navigate('ShareScreen')}
         style={{
           flexDirection: 'row',
 

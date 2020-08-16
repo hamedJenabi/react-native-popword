@@ -10,16 +10,6 @@ const pushNotification = (text, result) => {
   });
   const answer = [...result];
 
-  const identifier = Notifications.scheduleNotificationAsync({
-    content: {
-      title: 'POP WORD',
-      body: `${text}: ${answer[0].result}, ${answer[0].detail}`,
-    },
-    trigger: {
-      //5 seconds  from now (Test)
-      seconds: 15,
-    },
-  });
   const notificationName = Notifications.scheduleNotificationAsync({
     content: {
       title: 'POP WORD',

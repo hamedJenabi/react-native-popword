@@ -31,6 +31,7 @@ import {
   ListScreen,
   LogoutScreen,
   SplashScreen,
+  ShareScreen,
 } from './src/screens';
 
 import { decode, encode } from 'base-64';
@@ -48,7 +49,6 @@ import { YellowBox } from 'react-native';
 import CustomHeader from './src/Components/CustomHeader';
 import TabNavigation from './src/Components/TabNavigation';
 import CostumDrawerContent from './src/Components/CostumDrawerContent';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
 /*********Get Token and store it in AssyncStorage *********/
 
@@ -147,6 +147,9 @@ export default function App() {
           </Drawer.Screen>
           <Drawer.Screen name="Logout">
             {(props) => <LogoutScreen {...props} extraData={user} />}
+          </Drawer.Screen>
+          <Drawer.Screen name="ShareScreen">
+            {(props) => <ShareScreen {...props} extraData={user} />}
           </Drawer.Screen>
         </Drawer.Navigator>
       ) : (

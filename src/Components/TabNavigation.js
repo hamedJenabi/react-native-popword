@@ -25,6 +25,7 @@ import {
   RegistrationScreen,
   ListScreen,
   AboutScreen,
+  ShareScreen,
 } from '../../src/screens';
 
 import { decode, encode } from 'base-64';
@@ -69,19 +70,19 @@ export default function TabNavigation(props) {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === 'Home') {
-            iconName = focused
-              ? require('../../assets/home_focused.png')
-              : require('../../assets/home.png');
-          } else if (route.name === 'List') {
-            iconName = focused
-              ? require('../../assets/list_focused.png')
-              : require('../../assets/list.png');
-          } else if (route.name === 'Settings') {
-            iconName = focused
-              ? require('../../assets/setting_focused.png')
-              : require('../../assets/setting.png');
-          }
+          // if (route.name === 'Home') {
+          //   iconName = focused
+          //     ? require('../../assets/home_focused.png')
+          //     : require('../../assets/home.png');
+          // } else if (route.name === 'List') {
+          //   iconName = focused
+          //     ? require('../../assets/list_focused.png')
+          //     : require('../../assets/list.png');
+          // } else if (route.name === 'Settings') {
+          //   iconName = focused
+          //     ? require('../../assets/setting_focused.png')
+          //     : require('../../assets/setting.png');
+          // }
 
           // You can return any component that you like here!
           return (

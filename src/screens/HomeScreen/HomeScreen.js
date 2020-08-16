@@ -70,6 +70,27 @@ export default function HomeScreen(props) {
         }
       });
   };
+  // const fetching = async () => {
+  //   fetch(
+  //     `https://popwordapi.herokuapp.com/api/popword/${selectedDict}/${entityText}`,
+  //     {
+  //       method: 'GET',
+  //     },
+  //   )
+  //     .then((response) => response.json())
+  //     .then((response) => {
+  //       const result = response.slice(0, 2);
+  //       setData(result);
+  //       setLoading(false);
+
+  //       if (result) {
+  //         setShow(true);
+  //         addToDataBase(result);
+  //         const notification = pushNotification(entityText, result);
+  //         setNotifcationName(notification);
+  //       }
+  //     });
+  // };
 
   /******** INSERT INTO DATABASE *********/
 
@@ -144,7 +165,7 @@ export default function HomeScreen(props) {
                 value: 'es-en',
               },
               {
-                label: 'italian  -->  English',
+                label: 'Italian  -->  English',
                 value: 'it-en',
               },
             ]}
@@ -201,7 +222,7 @@ export default function HomeScreen(props) {
           />
           <TouchableOpacity
             style={styles.searchButton}
-            onPress={onSearchButtonPress}
+            onPress={(() => entityText.trim(), onSearchButtonPress)}
           >
             <Text style={styles.buttonText}>Search</Text>
           </TouchableOpacity>
